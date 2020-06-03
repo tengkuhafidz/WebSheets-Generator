@@ -23,7 +23,7 @@ This is a Gatsby template for creating listing websites based on Google sheets d
 ### Running on Dev Environment
 
 1. Create `.env.development` file on the project root
-   - Include `GATSBY_GOOGLE_CREDENTIALS`="Google-Sheets-Api-Key-With-Quatations"
+   - Include `GATSBY_SHEET_API_KEY`="Google-Sheets-Api-Key-With-Quatations"
    - Include `GATSBY_SHEET_ID`=Google-Sheets-Id-With-Quotations"
       - _Where is the [Google Sheets Id](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id)?_
 
@@ -33,7 +33,7 @@ This is a Gatsby template for creating listing websites based on Google sheets d
 
 ### Running on Prod Environment
 1. Create `.env.production` file on the project root
-   - Include `GATSBY_GOOGLE_CREDENTIALS`=Google-Sheets-Api-Key-Here
+   - Include `GATSBY_SHEET_API_KEY`=Google-Sheets-Api-Key-Here
    - Include `GATSBY_SHEET_ID`=Google-Sheets-Id-Here
       - _Where is the [Google Sheets Id](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id)?_
 2. Run `yarn build`

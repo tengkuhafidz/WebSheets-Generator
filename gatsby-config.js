@@ -46,7 +46,7 @@ module.exports = {
       resolve: 'gatsby-source-google-spreadsheets',
       options: {
         spreadsheetId: process.env.GATSBY_SHEET_ID,
-        apiKey: process.env.GATSBY_GOOGLE_CREDENTIALS,
+        apiKey: process.env.GATSBY_SHEET_API_KEY,
       },
     },
   ],
