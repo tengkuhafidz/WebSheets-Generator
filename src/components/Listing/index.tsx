@@ -16,9 +16,11 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   const getDistinctTags = () => {
     const distinctTags = []
     allItems.forEach((item) => {
-      item.tags.forEach((tag) => {
-        !distinctTags.includes(tag) && distinctTags.push(tag)
-      })
+      if (item.tags) {
+        item.tags.forEach((tag) => {
+          !distinctTags.includes(tag) && distinctTags.push(tag)
+        })
+      }
     })
     return distinctTags
   }
