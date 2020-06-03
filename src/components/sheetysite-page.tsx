@@ -7,14 +7,16 @@ import Hero from './Hero'
 import Listing from './Listing'
 import SEO from './seo'
 import { createArrayOfObjectsFromNestedArrays } from '../utils/util'
+import firebase from '../services/firebase'
+import { navigate } from 'gatsby'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
   extends RouteComponentProps<{
-    sheetId: string
+    permalink: string
   }> {}
 
-const SheetySitePage: React.FC<Props> = ({ sheetId = '1S-S1dzVsPlbYtYTq_jiXCcVYKf75wFlGxB2fKkdVc7w' }) => {
+const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [siteData, setSiteData] = useState()
   const [listingData, setListingData] = useState()
@@ -48,7 +50,23 @@ const SheetySitePage: React.FC<Props> = ({ sheetId = '1S-S1dzVsPlbYtYTq_jiXCcVYK
     })
   }
 
-  const fetchAndSetSheetsData = async () => {
+  const findSheetIdByPermalink = async () => {
+    const FIREBASE_COLLECTION = 'permalinkSheetIdMapping'
+    return firebase
+      .firestore()
+      .collection(FIREBASE_COLLECTION)
+      .doc(permalink)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return doc.data().sheetId
+        } else {
+          navigate('/')
+        }
+      })
+  }
+
+  const fetchAndSetSheetsData = async (sheetId) => {
     const sheetsApiUrl = `${BASE_URL}/${sheetId}/values:batchGet?ranges=${SITE_DATA_RANGE}&ranges=${LISTING_DATA_RANGE}&key=${API_KEY}`
     const fetchSheetsData = await fetch(sheetsApiUrl)
     const rawSheetsData = await fetchSheetsData.json()
@@ -57,12 +75,13 @@ const SheetySitePage: React.FC<Props> = ({ sheetId = '1S-S1dzVsPlbYtYTq_jiXCcVYK
   }
 
   useEffect(() => {
-    const runThis = async () => fetchAndSetSheetsData()
-    runThis()
-  }, [sheetId])
+    const executeSheetsDataFetch = async () => {
+      const sheetId = await findSheetIdByPermalink()
+      await fetchAndSetSheetsData(sheetId)
+    }
+    executeSheetsDataFetch()
+  }, [permalink])
 
-  console.log('>>> siteData', siteData)
-  console.log('>>> listingData', listingData)
   if (!siteData || !listingData) return <div>loading</div>
 
   const { sitePrimaryColor, siteName, siteLogo, heroTitle, heroDescription } = siteData as SiteData

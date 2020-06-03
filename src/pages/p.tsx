@@ -5,7 +5,7 @@ import SheetySitePage from '../components/sheetysite-page'
 const Page = () => {
   return (
     <Router basepath="/p">
-      <SheetySitePage path="/:sheetId" />
+      <SheetySitePage path="/:permalink" />
     </Router>
   )
 }
