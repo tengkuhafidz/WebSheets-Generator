@@ -1,14 +1,12 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { useEffect, useState } from 'react'
-import { API_KEY, BASE_URL, LISTING_DATA_RANGE, SITE_DATA_RANGE } from '../constants/sheets'
+import { findSheetIdByPermalink } from '../services/firebase'
+import { fetchAndSetSheetsData } from '../services/sheets'
 import { SiteData } from '../utils/models'
 import Footer from './footer'
 import Hero from './Hero'
 import Listing from './Listing'
 import SEO from './seo'
-import { createArrayOfObjectsFromNestedArrays } from '../utils/util'
-import firebase from '../services/firebase'
-import { navigate } from 'gatsby'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
@@ -21,65 +19,12 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   const [siteData, setSiteData] = useState()
   const [listingData, setListingData] = useState()
 
-  const shapeAndSetSiteData = (rawSiteData) => {
-    const siteData = createArrayOfObjectsFromNestedArrays(rawSiteData)[0]
-    setSiteData(siteData)
-  }
-
-  const shapeAndSetListingData = (rawListingData) => {
-    const listingData = createArrayOfObjectsFromNestedArrays(rawListingData)
-    console.log('shapeAndSetListingData', listingData)
-    if (listingData !== undefined) {
-      const formattedListingData = listingData.map((item) => {
-        if (typeof item.tags === 'string') {
-          item.tags = item.tags.split(', ')
-        }
-        return item
-      })
-      setListingData(formattedListingData)
-    }
-  }
-
-  const shapeAndSetSheetsData = (rawSheetsData) => {
-    rawSheetsData.valueRanges.forEach((data) => {
-      if (data.range === SITE_DATA_RANGE) {
-        shapeAndSetSiteData(data.values)
-      } else if (data.range === LISTING_DATA_RANGE) {
-        shapeAndSetListingData(data.values)
-      }
-    })
-  }
-
-  const findSheetIdByPermalink = async () => {
-    const FIREBASE_COLLECTION = 'permalinkSheetIdMapping'
-    return firebase
-      .firestore()
-      .collection(FIREBASE_COLLECTION)
-      .doc(permalink)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data().sheetId
-        } else {
-          navigate('/')
-        }
-      })
-  }
-
-  const fetchAndSetSheetsData = async (sheetId) => {
-    const sheetsApiUrl = `${BASE_URL}/${sheetId}/values:batchGet?ranges=${SITE_DATA_RANGE}&ranges=${LISTING_DATA_RANGE}&key=${API_KEY}`
-    const fetchSheetsData = await fetch(sheetsApiUrl)
-    const rawSheetsData = await fetchSheetsData.json()
-
-    shapeAndSetSheetsData(rawSheetsData)
-  }
-
   useEffect(() => {
-    const executeSheetsDataFetch = async () => {
-      const sheetId = await findSheetIdByPermalink()
-      await fetchAndSetSheetsData(sheetId)
+    const executeAsyncOperations = async () => {
+      const sheetId = await findSheetIdByPermalink(permalink)
+      await fetchAndSetSheetsData(sheetId, setSiteData, setListingData)
     }
-    executeSheetsDataFetch()
+    executeAsyncOperations()
   }, [permalink])
 
   if (!siteData || !listingData) return <div>loading</div>
