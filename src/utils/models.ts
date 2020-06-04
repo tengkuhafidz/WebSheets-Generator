@@ -1,12 +1,35 @@
 export interface ItemData {
-  id: string
-  title: string
-  actionUrl: string
-  tags: string[]
   itemId: string
+  title: string
   subtitle: string
   description: string
   image: string
+  actionUrl: string
+  tags: string[]
+}
+
+export const isValidItemData = (object: any): object is ItemData => {
+  if (!object) {
+    return false
+  }
+
+  const hasValidItemId = !!object.itemId
+  const hasValidTitle = !!object.title
+  const hasValidSubtitle = !!object.subtitle
+  const hasValidDescription = !!object.description
+  const hasValidImage = !!object.image
+  const hasValidActionUrl = !!object.actionUrl
+  const hasValidTags = !!(object.tags && Array.isArray(object.tags))
+
+  return (
+    hasValidItemId &&
+    hasValidTitle &&
+    hasValidSubtitle &&
+    hasValidDescription &&
+    hasValidImage &&
+    hasValidActionUrl &&
+    hasValidTags
+  )
 }
 
 export interface SiteData {
@@ -25,6 +48,46 @@ export interface SiteData {
   facebookUrl: string
   instagramUrl: string
   twitterUrl: string
+}
+
+export const isValidSiteData = (object: any): object is SiteData => {
+  if (!object) {
+    return false
+  }
+
+  const hasValidSiteName = !!object.siteName
+  const hasValidSiteLogo = !!object.siteLogo
+  const hasValidSitePrimaryColor = !!object.sitePrimaryColor
+  const hasValidHeroType = !!object.heroType
+  const hasValidHeroTitle = !!object.heroTitle
+  const hasValidHeroDescription = !!object.heroDescription
+  const hasValidHeroButtonLabel = !!object.heroButtonLabel
+  const hasValidHeroButtonUrl = !!object.heroButtonUrl
+  const hasValidListingType = !!object.listingType
+  const hasValidListingDescriptionButtonLabel = !!object.listingDescriptionButtonLabel
+  const hasValidListingUrlButtonLabel = !!object.listingUrlButtonLabel
+  const hasValidFooterLabel = !!object.footerLabel
+  const hasValidFacebookUrl = !!object.facebookUrl
+  const hasValidInstagramUrl = !!object.instagramUrl
+  const hasValidTwitterUrl = !!object.twitterUrl
+
+  return (
+    hasValidSiteName &&
+    hasValidSiteLogo &&
+    hasValidSitePrimaryColor &&
+    hasValidHeroType &&
+    hasValidHeroTitle &&
+    hasValidHeroDescription &&
+    hasValidHeroButtonLabel &&
+    hasValidHeroButtonUrl &&
+    hasValidListingType &&
+    hasValidListingDescriptionButtonLabel &&
+    hasValidListingUrlButtonLabel &&
+    hasValidFooterLabel &&
+    hasValidFacebookUrl &&
+    hasValidInstagramUrl &&
+    hasValidTwitterUrl
+  )
 }
 
 export interface Theme {

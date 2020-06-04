@@ -1,7 +1,8 @@
 import { RouteComponentProps } from '@reach/router'
+import { navigate } from 'gatsby'
 import React, { useEffect, useState } from 'react'
 import { findSheetIdByPermalink } from '../services/firebase'
-import { fetchAndSetSheetsData } from '../services/sheets'
+import { fetchAndFormatSheetsData, validateSheetsData } from '../services/sheets'
 import { SiteData } from '../utils/models'
 import Footer from './footer'
 import Hero from './Hero'
@@ -19,10 +20,21 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   const [siteData, setSiteData] = useState()
   const [listingData, setListingData] = useState()
 
+  const setSheetsData = (siteData, listingData) => {
+    setSiteData(siteData)
+    setListingData(listingData)
+  }
+
   useEffect(() => {
     const executeAsyncOperations = async () => {
-      const sheetId = await findSheetIdByPermalink(permalink)
-      await fetchAndSetSheetsData(sheetId, setSiteData, setListingData)
+      const sheetId = await findSheetIdByPermalink(permalink.toLowerCase())
+      const sheetsData = await fetchAndFormatSheetsData(sheetId)
+      const isValidSheetsData = validateSheetsData(sheetsData)
+      if (isValidSheetsData) {
+        setSheetsData(sheetsData.formattedSiteData, sheetsData.formattedListingData)
+      } else {
+        navigate('/')
+      }
     }
     executeAsyncOperations()
   }, [permalink])

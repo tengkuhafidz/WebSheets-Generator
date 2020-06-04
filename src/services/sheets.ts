@@ -1,4 +1,4 @@
-import { navigate } from '@reach/router'
+import { isValidItemData, isValidSiteData } from '../utils/models'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
 export const SITE_DATA_RANGE = 'site!A1:O2'
@@ -72,26 +72,31 @@ const fetchRawSheetsData = async (sheetId) => {
   return rawSheetsData
 }
 
-export const fetchAndSetSheetsData = async (sheetId, setSiteData, setListingData) => {
-  const rawSheetsData = await fetchRawSheetsData(sheetId)
-
+export const fetchAndFormatSheetsData = async (sheetId) => {
   try {
-    const { formattedSiteData, formattedListingData } = formatSheetsData(rawSheetsData)
-    setSiteData(formattedSiteData)
-    setListingData(formattedListingData)
+    const rawSheetsData = await fetchRawSheetsData(sheetId)
+    return formatSheetsData(rawSheetsData)
   } catch (e) {
-    navigate('/')
+    return null
   }
 }
 
-export const validateSheetFields = async (sheetId) => {
-  const rawSheetsData = await fetchRawSheetsData(sheetId)
+const validateSiteData = (siteData) => {
+  return isValidSiteData(siteData)
+}
 
-  try {
-    formatSheetsData(rawSheetsData)
-  } catch (e) {
-    console.log('bad excel format')
-  }
+const validateListingData = (listingData) => {
+  let isValid = true
+  listingData.forEach((item) => {
+    if (!isValidItemData(item)) {
+      isValid = false
+    }
+  })
 
-  return rawSheetsData
+  return isValid
+}
+
+export const validateSheetsData = (sheetsData) => {
+  const { formattedSiteData, formattedListingData } = sheetsData
+  return validateSiteData(formattedSiteData) && validateListingData(formattedListingData)
 }

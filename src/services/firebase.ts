@@ -32,7 +32,13 @@ export const findSheetIdByPermalink = async (permalink) => {
   }
 }
 
-const createPermalinkSheetIdMapping = async (permalink, sheetId) => {
+export const checkPermalinkAvailability = async (permalink) => {
+  const permalinkDoc = await fetchPermalinkSheetIdMapping(permalink)
+  console.log('checkPermalinkAvailability', permalinkDoc)
+  return !permalinkDoc.exists
+}
+
+export const createPermalinkSheetIdMapping = async (permalink, sheetId) => {
   try {
     await db.doc(permalink).set({
       sheetId,
@@ -41,16 +47,6 @@ const createPermalinkSheetIdMapping = async (permalink, sheetId) => {
     console.log('successs!')
   } catch (e) {
     console.log('FAILED', e)
-  }
-}
-
-export const createPermalinkIfNew = async (permalink, sheetId) => {
-  const rawDoc = await fetchPermalinkSheetIdMapping(permalink)
-
-  if (rawDoc.exists) {
-    console.log(`permalink ${permalink} is already being used`)
-  } else {
-    await createPermalinkSheetIdMapping(permalink, sheetId)
   }
 }
 

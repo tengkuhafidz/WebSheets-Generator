@@ -1,17 +1,32 @@
 import React, { useState } from 'react'
-import { createPermalinkIfNew } from '../services/firebase'
-import { validateSheetFields } from '../services/sheets'
+import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
+import { fetchAndFormatSheetsData, validateSheetsData } from '../services/sheets'
+import { isAlphaNumericDash } from '../utils/util'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState()
   const [permalink, setPermalink] = useState()
+  const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
+  const [invalidPermalinkErrMsg, setInvalidPermalinkErrMsg] = useState(null)
+  const [unavailablePermalinkErrMsg, setUnavailablePermalinkErrMsg] = useState(null)
 
   const handleSheetsUrlChange = (e) => {
     setSheetsUrl(e.target.value)
   }
 
+  const forceLowerCaseInput = (e) => {
+    e.target.value = e.target.value.toLowerCase()
+  }
+
   const handlePermalinkChange = (e) => {
+    forceLowerCaseInput(e)
     setPermalink(e.target.value)
+  }
+
+  const preventSpaceInput = (e) => {
+    if (e.keyCode === 32) {
+      e.preventDefault()
+    }
   }
 
   const extractSheetIdFromUrl = (sheetsUrl) => {
@@ -20,12 +35,46 @@ const Home = () => {
     return sheetId
   }
 
-  const handleSiteGeneration = () => {
-    console.log('handleSiteGeneration', sheetsUrl, permalink)
+  const validateInputs = async (sheetId) => {
+    const sheetsData = await fetchAndFormatSheetsData(sheetId)
+    const isValidSheetsData = !!sheetsData && validateSheetsData(sheetsData)
+    const isValidPermalink = isAlphaNumericDash(permalink)
+    const isPermalinkAvailable = await checkPermalinkAvailability(permalink)
+
+    return {
+      isValidSheetsData,
+      isValidPermalink,
+      isPermalinkAvailable,
+    }
+  }
+
+  const resetErrorMessages = () => {
+    setInvalidSheetsErrMsg(null)
+    setInvalidPermalinkErrMsg(null)
+    setUnavailablePermalinkErrMsg(null)
+  }
+
+  const setErrorMessages = (isValidSheetsData, isValidPermalink, isPermalinkAvailable) => {
+    if (!isValidSheetsData) {
+      setInvalidSheetsErrMsg('Please follow step 1 to obtain a valid url.')
+    }
+    if (!isValidPermalink) {
+      setInvalidPermalinkErrMsg('Only alphanumerics, underscores, and hyphens are allowed. ')
+    }
+    if (!isPermalinkAvailable) {
+      setUnavailablePermalinkErrMsg('Permalink has already been taken.')
+    }
+  }
+
+  const handleSiteGeneration = async () => {
+    resetErrorMessages()
     const sheetId = extractSheetIdFromUrl(sheetsUrl)
-    console.log('handleSiteGeneration sheetId', sheetId)
-    validateSheetFields(sheetId)
-    createPermalinkIfNew(permalink, sheetId)
+    const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(sheetId)
+    if (isValidSheetsData && isValidPermalink && isPermalinkAvailable) {
+      createPermalinkSheetIdMapping(permalink, sheetId)
+    } else {
+      setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
+    }
   }
 
   return (
@@ -44,6 +93,7 @@ const Home = () => {
               placeholder="Sheets Url"
               onChange={(e) => handleSheetsUrlChange(e)}
             />
+            <p className="text-red-500 text-xs">{invalidSheetsErrMsg}</p>
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="permalink">
@@ -55,7 +105,12 @@ const Home = () => {
               type="text"
               placeholder="Permalink"
               onChange={(e) => handlePermalinkChange(e)}
+              onKeyDown={(e) => preventSpaceInput(e)}
             />
+            <p className="text-red-500 text-xs">
+              {invalidPermalinkErrMsg}
+              {unavailablePermalinkErrMsg}
+            </p>
           </div>
           <div className="flex items-center justify-between">
             <button
