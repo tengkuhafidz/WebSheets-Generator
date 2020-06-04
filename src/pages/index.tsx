@@ -9,6 +9,7 @@ const Home = () => {
   const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
   const [invalidPermalinkErrMsg, setInvalidPermalinkErrMsg] = useState(null)
   const [unavailablePermalinkErrMsg, setUnavailablePermalinkErrMsg] = useState(null)
+  const [hasGeneratedSite, setHasGeneratedSite] = useState(false)
 
   const handleSheetsUrlChange = (e) => {
     setSheetsUrl(e.target.value)
@@ -56,7 +57,7 @@ const Home = () => {
 
   const setErrorMessages = (isValidSheetsData, isValidPermalink, isPermalinkAvailable) => {
     if (!isValidSheetsData) {
-      setInvalidSheetsErrMsg('Please follow step 1 to obtain a valid url.')
+      setInvalidSheetsErrMsg('Please follow step 1 & 2 to obtain a valid url.')
     }
     if (!isValidPermalink) {
       setInvalidPermalinkErrMsg('Only alphanumerics, underscores, and hyphens are allowed. ')
@@ -66,15 +67,39 @@ const Home = () => {
     }
   }
 
+  const getSheetySiteUrl = (permalink) => {
+    return `https://sheety.site/p/${permalink}`
+  }
+
   const handleSiteGeneration = async () => {
     resetErrorMessages()
     const sheetId = extractSheetIdFromUrl(sheetsUrl)
     const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(sheetId)
     if (isValidSheetsData && isValidPermalink && isPermalinkAvailable) {
-      createPermalinkSheetIdMapping(permalink, sheetId)
+      await createPermalinkSheetIdMapping(permalink, sheetId)
+      setHasGeneratedSite(true)
     } else {
       setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
     }
+  }
+
+  if (hasGeneratedSite) {
+    return (
+      <div className="min-h-screen bg-green-600 text-gray-800">
+        <div className="w-full max-w-2xl mx-auto py-40">
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
+            <span className="text-6xl">🎉</span>
+            <h1 className="font-bold text-xl mb-4">Your SheetySite has been generated!</h1>
+            <p>
+              You may check it out at:&nbsp;
+              <a href={getSheetySiteUrl(permalink)} target="_blank" rel="noreferrer" className="text-blue-600">
+                {getSheetySiteUrl(permalink)}
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -117,7 +142,7 @@ const Home = () => {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="permalink">
               4. Type in the permalink you want for your site
               <p className="font-medium">
-                i.e. <span className="text-blue-600">https://sheety.site/p/{permalink}</span>
+                i.e. <span className="text-blue-600">{getSheetySiteUrl(permalink)}</span>
               </p>
             </label>
             <input
