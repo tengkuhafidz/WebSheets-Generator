@@ -78,13 +78,31 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-green-800 text-gray-800">
-      <div className="w-full max-w-xl mx-auto py-40">
+    <div className="min-h-screen bg-green-600 text-gray-800">
+      <div className="w-full max-w-2xl mx-auto py-40">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <h1 className="text-4xl text-center mb-8">SheetySite</h1>
           <div className="mb-4">
+            <p className="block text-gray-700 text-sm font-bold mb-2">
+              1. Make a copy of SheetySite template to you Google Drive by clicking &nbsp;
+              <a
+                href="https://docs.google.com/spreadsheets/d/1S-S1dzVsPlbYtYTq_jiXCcVYKf75wFlGxB2fKkdVc7w/copy#gid=1818216905"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600"
+              >
+                here
+              </a>
+            </p>
+          </div>
+          <div className="mb-4">
+            <p className="block text-gray-700 text-sm font-bold mb-2">
+              2. Click the `Share` button and change the view access setting to `anyone with the link`
+            </p>
+          </div>
+          <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="sheetsUrl">
-              Google Sheets Url
+              3. Copy the link and paste it here
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -97,7 +115,10 @@ const Home = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="permalink">
-              Permalink
+              4. Type in the permalink you want for your site
+              <p className="font-medium">
+                i.e. <span className="text-blue-600">https://sheety.site/p/{permalink}</span>
+              </p>
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -120,12 +141,9 @@ const Home = () => {
             >
               Generate SheetySite
             </button>
-            <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-              Forgot Password?
-            </a>
           </div>
         </form>
-        <p className="text-center text-gray-500 text-xs">&copy;2020 Acme Corp. All rights reserved.</p>
+        <p className="text-center text-gray-200 text-xs">&copy;2020 SheetySite. All rights reserved.</p>
       </div>
     </div>
   )
