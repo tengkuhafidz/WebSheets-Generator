@@ -36,6 +36,7 @@ export interface SiteData {
   siteName: string
   siteLogo: string
   sitePrimaryColor: string
+  darkMode: boolean
   heroType: HeroType
   heroTitle: string
   heroDescription: string
@@ -58,6 +59,7 @@ export const isValidSiteData = (object: any): object is SiteData => {
   const hasValidSiteName = !!object.siteName
   const hasValidSiteLogo = !!object.siteLogo
   const hasValidSitePrimaryColor = !!object.sitePrimaryColor
+  const hasValidDarkMode = object.darkMode !== undefined
   const hasValidHeroType = !!object.heroType
   const hasValidHeroTitle = !!object.heroTitle
   const hasValidHeroDescription = !!object.heroDescription
@@ -75,6 +77,7 @@ export const isValidSiteData = (object: any): object is SiteData => {
     hasValidSiteName &&
     hasValidSiteLogo &&
     hasValidSitePrimaryColor &&
+    hasValidDarkMode &&
     hasValidHeroType &&
     hasValidHeroTitle &&
     hasValidHeroDescription &&

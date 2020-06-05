@@ -22,6 +22,7 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
 
   const setSheetsData = (siteData, listingData) => {
     setSiteData(siteData)
+    setIsDarkMode(siteData.darkMode)
     setListingData(listingData)
   }
 
@@ -42,9 +43,20 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   if (!siteData || !listingData) return <div>loading</div>
 
   const { sitePrimaryColor, siteName, siteLogo, heroTitle, heroDescription } = siteData as SiteData
+  let primaryColor = `${sitePrimaryColor}-500`
+  switch (sitePrimaryColor) {
+    case 'pink':
+      primaryColor = `${sitePrimaryColor}-400`
+      break
+    case 'red':
+      primaryColor = `${sitePrimaryColor}-600`
+      break
+    default:
+      primaryColor = `${sitePrimaryColor}-500`
+  }
 
   const lightTheme = {
-    primary: `${sitePrimaryColor}-600`,
+    primary: primaryColor,
     secondary: `${sitePrimaryColor}-800`,
     text: 'text-gray-800',
     subtext: 'text-gray-600',
@@ -56,7 +68,7 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   }
 
   const darkTheme = {
-    primary: `${sitePrimaryColor}-600`,
+    primary: primaryColor,
     secondary: `${sitePrimaryColor}-800`,
     text: 'text-white',
     subtext: 'text-gray-400',

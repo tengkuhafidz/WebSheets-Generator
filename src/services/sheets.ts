@@ -1,7 +1,7 @@
 import { isValidItemData, isValidSiteData } from '../utils/models'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
-export const SITE_DATA_RANGE = 'site!A1:O2'
+export const SITE_DATA_RANGE = 'site!A1:P2'
 export const LISTING_DATA_RANGE = 'listing!A1:G1000'
 export const BASE_URL = 'https://sheets.googleapis.com/v4/spreadsheets'
 
@@ -33,7 +33,16 @@ export const createArrayOfObjectsFromNestedArrays = (rawNestedArrayData) => {
 }
 
 const formatSiteData = (rawSiteData) => {
-  return createArrayOfObjectsFromNestedArrays(rawSiteData)[0]
+  const siteData = createArrayOfObjectsFromNestedArrays(rawSiteData)[0]
+  if (siteData !== undefined) {
+    const { darkMode, ...rest } = siteData
+    const formattedSiteData = {
+      ...rest,
+      darkMode: darkMode === 'TRUE',
+    }
+    return formattedSiteData
+  }
+  return siteData
 }
 
 const formatListingData = (rawListingData) => {
