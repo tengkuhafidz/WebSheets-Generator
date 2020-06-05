@@ -14,11 +14,11 @@ const Navbar: React.FC<Props> = ({ title, isDarkMode, handleDarkModeClick }) => 
     <div>
       <nav className={`container mx-auto py-8 flex`}>
         <div className="px-4 flex">
-          <span className={`font-bold text-lg tracking-tight text-gray-100`}>{title}</span>
+          <span className={`font-bold text-lg tracking-tight text-gray-100 cursor-default`}>{title}</span>
         </div>
         <div className="flex-grow"></div>
         <div className={`flex px-4 text-gray-100`}>
-          <i className={`fas ${darkModeIcon} text-2xl`} onClick={() => handleDarkModeClick()}></i>
+          <i className={`fas ${darkModeIcon} text-2xl cursor-pointer`} onClick={() => handleDarkModeClick()}></i>
         </div>
       </nav>
     </div>
