@@ -5,7 +5,7 @@ import { isAlphaNumericDash } from '../utils/util'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState()
-  const [permalink, setPermalink] = useState()
+  const [permalink, setPermalink] = useState('<Permalink>')
   const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
   const [invalidPermalinkErrMsg, setInvalidPermalinkErrMsg] = useState(null)
   const [unavailablePermalinkErrMsg, setUnavailablePermalinkErrMsg] = useState(null)
