@@ -38,10 +38,11 @@ export const checkPermalinkAvailability = async (permalink) => {
   return !permalinkDoc.exists
 }
 
-export const createPermalinkSheetIdMapping = async (permalink, sheetId) => {
+export const createPermalinkSheetIdMapping = async (permalink, sheetId, email) => {
   try {
     await db.doc(permalink).set({
       sheetId,
+      email,
       createdAt: new Date(),
     })
     console.log('successs!')

@@ -5,10 +5,14 @@ import { isAlphaNumericDash } from '../utils/util'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState()
+  const [sheetId, setSheetId] = useState()
   const [permalink, setPermalink] = useState('<Permalink>')
+  const [email, setEmail] = useState('<Permalink>')
   const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
   const [invalidPermalinkErrMsg, setInvalidPermalinkErrMsg] = useState(null)
+  const [invalidEmailErrMsg, setInvalidEmailErrMsg] = useState(null)
   const [unavailablePermalinkErrMsg, setUnavailablePermalinkErrMsg] = useState(null)
+  const [hasPassedValidation, setHasPassedValidation] = useState(false)
   const [hasGeneratedSite, setHasGeneratedSite] = useState(false)
 
   const handleSheetsUrlChange = (e) => {
@@ -22,6 +26,15 @@ const Home = () => {
   const handlePermalinkChange = (e) => {
     forceLowerCaseInput(e)
     setPermalink(e.target.value)
+  }
+
+  const validateEmail = () => {
+    const re = /\S+@\S+\.\S+/
+    return re.test(email)
+  }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
   }
 
   const preventSpaceInput = (e) => {
@@ -71,15 +84,24 @@ const Home = () => {
     return `https://sheety.site/p/${permalink}`
   }
 
-  const handleSiteGeneration = async () => {
+  const handleSubmitForm = async () => {
     resetErrorMessages()
-    const sheetId = extractSheetIdFromUrl(sheetsUrl)
+    setSheetId(extractSheetIdFromUrl(sheetsUrl))
     const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(sheetId)
     if (isValidSheetsData && isValidPermalink && isPermalinkAvailable) {
-      await createPermalinkSheetIdMapping(permalink, sheetId)
-      setHasGeneratedSite(true)
+      setHasPassedValidation(true)
     } else {
       setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
+    }
+  }
+
+  const handleSiteGeneration = async () => {
+    const isValidEmail = validateEmail()
+    if (isValidEmail) {
+      await createPermalinkSheetIdMapping(permalink, sheetId, email)
+      setHasGeneratedSite(true)
+    } else {
+      setInvalidEmailErrMsg('Please input a valid email')
     }
   }
 
@@ -95,6 +117,38 @@ const Home = () => {
               {getSheetySiteUrl(permalink)}
             </a>
           </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (hasPassedValidation) {
+    return (
+      <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
+        <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
+          <span className="text-6xl">💌</span>
+          <h1 className="font-bold text-xl">Final Step! Please provide your email.</h1>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm  mb-6 max-w-lg mx-auto" htmlFor="email">
+              As SheetySite is an evolving project, we need a way to reach out to you whenever there is any major
+              updates to the system.
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="Email"
+              onChange={(e) => handleEmailChange(e)}
+            />
+            <p className="text-red-500 text-xs text-left">{invalidEmailErrMsg}</p>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-8 border-b-4 border-blue-800"
+              type="button"
+              onClick={handleSiteGeneration}
+            >
+              Generate My SheetySite
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -159,9 +213,9 @@ const Home = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={handleSiteGeneration}
+            onClick={handleSubmitForm}
           >
-            Generate SheetySite
+            Submit
           </button>
         </div>
       </form>
