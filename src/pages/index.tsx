@@ -18,6 +18,10 @@ const Home = () => {
   const [hasPassedValidation, setHasPassedValidation] = useState(false)
   const [hasGeneratedSite, setHasGeneratedSite] = useState(false)
 
+  /**
+   * CREATE LISTING PAGE FORM FUNCTIONS
+   */
+
   const handleSheetsUrlChange = (e) => {
     setSheetsUrl(e.target.value)
   }
@@ -31,25 +35,16 @@ const Home = () => {
     setPermalink(e.target.value)
   }
 
-  const validateEmail = () => {
-    const re = /\S+@\S+\.\S+/
-    return re.test(email)
-  }
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value)
-  }
-
-  const preventSpaceInput = (e) => {
-    if (e.keyCode === 32) {
-      e.preventDefault()
+  const setErrorMessages = (isValidSheetsData, isValidPermalink, isPermalinkAvailable) => {
+    if (!isValidSheetsData) {
+      setInvalidSheetsErrMsg('Please follow step 1 & 2 to obtain a valid url.')
     }
-  }
-
-  const extractSheetIdFromUrl = (sheetsUrl) => {
-    const pathsAsArray = sheetsUrl.replace(/^https?:\/\//, '').split('/')
-    const sheetId = pathsAsArray[3]
-    return sheetId
+    if (!isValidPermalink) {
+      setInvalidPermalinkErrMsg('Only alphanumerics, underscores, and hyphens are allowed. ')
+    }
+    if (!isPermalinkAvailable) {
+      setUnavailablePermalinkErrMsg('Permalink has already been taken.')
+    }
   }
 
   const validateInputs = async (sheetId) => {
@@ -65,40 +60,42 @@ const Home = () => {
     }
   }
 
+  const sheetySiteUrl = `https://sheety.site/p/${permalink}`
+
+  const extractSheetIdFromUrl = (sheetsUrl) => {
+    const pathsAsArray = sheetsUrl.replace(/^https?:\/\//, '').split('/')
+    const sheetId = pathsAsArray[3]
+    return sheetId
+  }
+
   const resetErrorMessages = () => {
     setInvalidSheetsErrMsg(null)
     setInvalidPermalinkErrMsg(null)
     setUnavailablePermalinkErrMsg(null)
   }
 
-  const setErrorMessages = (isValidSheetsData, isValidPermalink, isPermalinkAvailable) => {
-    if (!isValidSheetsData) {
-      setInvalidSheetsErrMsg('Please follow step 1 & 2 to obtain a valid url.')
-    }
-    if (!isValidPermalink) {
-      setInvalidPermalinkErrMsg('Only alphanumerics, underscores, and hyphens are allowed. ')
-    }
-    if (!isPermalinkAvailable) {
-      setUnavailablePermalinkErrMsg('Permalink has already been taken.')
-    }
-  }
-
-  const getSheetySiteUrl = (permalink) => {
-    return `https://sheety.site/p/${permalink}`
-  }
-
   const handleSubmitListingForm = async () => {
-    console.log('handleSubmitListingForm')
     resetErrorMessages()
     setSheetId(extractSheetIdFromUrl(sheetsUrl))
     const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(sheetId)
     if (isValidSheetsData && isValidPermalink && isPermalinkAvailable) {
-      console.log('setHasPassedValidation')
-
       setHasPassedValidation(true)
     } else {
       setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
     }
+  }
+
+  /**
+   * REQUEST EMAIL FORM PAGE
+   */
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const validateEmail = () => {
+    const re = /\S+@\S+\.\S+/
+    return re.test(email)
   }
 
   const handleSiteGeneration = async () => {
@@ -111,33 +108,23 @@ const Home = () => {
     }
   }
 
-  if (hasGeneratedSite) {
-    return (
-      <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
-        <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
-          <SuccessCard sheetySiteUrl={getSheetySiteUrl(permalink)} />
-        </div>
-      </div>
-    )
-  }
+  /**
+   * DETERMINE COMPONENT CONTENT TO SHOW BASED ON STATE
+   */
 
-  if (hasPassedValidation) {
-    return (
-      <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
-        <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
-          <RequestEmailForm
-            handleEmailChange={handleEmailChange}
-            handleSiteGeneration={handleSiteGeneration}
-            invalidEmailErrMsg={invalidEmailErrMsg}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
-      <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  const renderContent = () => {
+    if (hasGeneratedSite) {
+      return <SuccessCard sheetySiteUrl={sheetySiteUrl} />
+    } else if (hasPassedValidation) {
+      return (
+        <RequestEmailForm
+          handleEmailChange={handleEmailChange}
+          handleSiteGeneration={handleSiteGeneration}
+          invalidEmailErrMsg={invalidEmailErrMsg}
+        />
+      )
+    } else {
+      return (
         <CreateListingPageForm
           handleSheetsUrlChange={handleSheetsUrlChange}
           handlePermalinkChange={handlePermalinkChange}
@@ -145,9 +132,15 @@ const Home = () => {
           invalidSheetsErrMsg={invalidSheetsErrMsg}
           invalidPermalinkErrMsg={invalidPermalinkErrMsg}
           unavailablePermalinkErrMsg={unavailablePermalinkErrMsg}
-          sheetySiteUrl={getSheetySiteUrl(permalink)}
+          sheetySiteUrl={sheetySiteUrl}
         />
-      </div>
+      )
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
+      <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">{renderContent()}</div>
       <p className="text-center text-gray-200 text-xs">&copy;2020 SheetySite. All rights reserved.</p>
     </div>
   )
