@@ -1,6 +1,6 @@
 import Fuse from 'fuse.js'
 import React, { useState } from 'react'
-import { ItemData, ListingType, SiteData, Theme } from '../../utils/models'
+import { ItemData, ListingType, SiteData, Theme } from '../../../utils/models'
 import Events from './Events'
 import ListingItems from './listing-items'
 
@@ -31,7 +31,7 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   const [currentTab, setCurrentTab] = useState(tabs[0])
   const [searchTerm, setSearchTerm] = useState('')
 
-  const getFuseSearchResult = (items: ItemData[], searchTerm: string): object[] => {
+  const getFuseSearchResult = (items: ItemData[], searchTerm: string): ItemData[] => {
     const options = {
       isCaseSensitive: false,
       findAllMatches: false,

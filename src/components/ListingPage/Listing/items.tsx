@@ -1,6 +1,6 @@
 import React from 'react'
 import ModernItem from './Modern/modern-item'
-import { ItemData, Theme, ListingType, SiteData } from '../../utils/models'
+import { ItemData, Theme, ListingType, SiteData } from '../../../utils/models'
 import ProfileItem from './Profiles/profiles-item'
 import BasicItem from './Basic/basic-item'
 import CompactItem from './Compact/compact-item'

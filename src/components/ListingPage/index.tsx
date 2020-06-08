@@ -1,9 +1,9 @@
 import { RouteComponentProps } from '@reach/router'
 import { navigate } from 'gatsby'
 import React, { useEffect, useState } from 'react'
-import { findSheetIdByPermalink } from '../services/firebase'
-import { fetchAndFormatSheetsData, validateSheetsData } from '../services/sheets'
-import { SiteData } from '../utils/models'
+import { findSheetIdByPermalink } from '../../services/firebase'
+import { fetchAndFormatSheetsData, validateSheetsData } from '../../services/sheets'
+import { SiteData } from '../../utils/models'
 import Footer from './footer'
 import Hero from './Hero'
 import Listing from './Listing'
@@ -15,7 +15,7 @@ interface Props
     permalink: string
   }> {}
 
-const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
+const ListingPage: React.FC<Props> = ({ permalink }) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [siteData, setSiteData] = useState()
   const [listingData, setListingData] = useState()
@@ -95,4 +95,4 @@ const SheetySitePage: React.FC<Props> = ({ permalink = 'sample' }) => {
   )
 }
 
-export default SheetySitePage
+export default ListingPage

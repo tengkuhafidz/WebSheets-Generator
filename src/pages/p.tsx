@@ -1,11 +1,11 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import SheetySitePage from '../components/sheetysite-page'
+import ListingPage from '../components/ListingPage'
 
 const Page = () => {
   return (
     <Router basepath="/p">
-      <SheetySitePage path="/:permalink" />
+      <ListingPage path="/:permalink" />
     </Router>
   )
 }
