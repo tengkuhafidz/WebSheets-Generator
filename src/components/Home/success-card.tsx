@@ -5,7 +5,7 @@ interface Props {
 }
 
 const SuccessCard: React.FC<Props> = ({ sheetySiteUrl }) => (
-  <div>
+  <div className="text-center">
     <span className="text-6xl">🎉</span>
     <h1 className="font-bold text-xl mb-4">Your SheetySite has been generated!</h1>
     <p>

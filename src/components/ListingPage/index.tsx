@@ -29,14 +29,22 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
   useEffect(() => {
     const executeAsyncOperations = async () => {
       const sheetId = await findSheetIdByPermalink(permalink.toLowerCase())
+
+      if (!sheetId) {
+        navigate('/')
+        return
+      }
+
       const sheetsData = await fetchAndFormatSheetsData(sheetId)
       const isValidSheetsData = validateSheetsData(sheetsData)
+
       if (isValidSheetsData) {
-        setSheetsData(sheetsData.formattedSiteData, sheetsData.formattedListingData)
+        setSheetsData(sheetsData.siteData, sheetsData.listingData)
       } else {
         navigate('/')
       }
     }
+
     executeAsyncOperations()
   }, [permalink])
 

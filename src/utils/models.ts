@@ -93,6 +93,11 @@ export const isValidSiteData = (object: any): object is SiteData => {
   )
 }
 
+export interface SheetsData {
+  siteData: SiteData
+  listingData: ItemData[]
+}
+
 export interface Theme {
   primary: string
   secondary: string

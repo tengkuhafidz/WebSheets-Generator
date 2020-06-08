@@ -1,6 +1,9 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { navigate } from 'gatsby'
+
+/**
+ * SETUP FIREBASE
+ */
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_FIREBASE_API_KEY,
@@ -18,36 +21,43 @@ firebase.initializeApp(firebaseConfig)
 const FIREBASE_COLLECTION = 'permalinkSheetIdMapping'
 const db = firebase.firestore().collection(FIREBASE_COLLECTION)
 
+/**
+ * FETCHING FIREBASE DATA
+ */
+
 const fetchPermalinkSheetIdMapping = async (permalink) => {
   return await db.doc(permalink).get()
 }
 
-export const findSheetIdByPermalink = async (permalink) => {
+export const findSheetIdByPermalink = async (permalink: string): Promise<string> => {
   const rawDoc = await fetchPermalinkSheetIdMapping(permalink)
 
   if (rawDoc.exists) {
     return rawDoc.data().sheetId
   } else {
-    navigate('/')
+    return null
   }
 }
 
-export const checkPermalinkAvailability = async (permalink) => {
+export const checkPermalinkAvailability = async (permalink: string) => {
   const permalinkDoc = await fetchPermalinkSheetIdMapping(permalink)
-  console.log('checkPermalinkAvailability', permalinkDoc)
   return !permalinkDoc.exists
 }
 
-export const createPermalinkSheetIdMapping = async (permalink, sheetId, email) => {
+/**
+ * SETTING FIREBASE DATA
+ */
+
+export const createPermalinkSheetIdMapping = async (permalink: string, sheetId: string, email: string) => {
   try {
     await db.doc(permalink).set({
       sheetId,
       email,
       createdAt: new Date(),
     })
-    console.log('successs!')
+    return true
   } catch (e) {
-    console.log('FAILED', e)
+    return false
   }
 }
 

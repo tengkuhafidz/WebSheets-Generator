@@ -7,8 +7,8 @@ import RequestEmailForm from '../components/Home/request-email-form'
 import CreateListingPageForm from '../components/Home/create-listing-page-form'
 
 const Home = () => {
-  const [sheetsUrl, setSheetsUrl] = useState()
-  const [sheetId, setSheetId] = useState()
+  const [sheetsUrl, setSheetsUrl] = useState(null)
+  const [sheetId, setSheetId] = useState(null)
   const [permalink, setPermalink] = useState('<Permalink>')
   const [email, setEmail] = useState('<Permalink>')
   const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
@@ -62,7 +62,7 @@ const Home = () => {
 
   const sheetySiteUrl = `https://sheety.site/p/${permalink}`
 
-  const extractSheetIdFromUrl = (sheetsUrl) => {
+  const extractSheetIdFromUrl = (sheetsUrl: string): string => {
     const pathsAsArray = sheetsUrl.replace(/^https?:\/\//, '').split('/')
     const sheetId = pathsAsArray[3]
     return sheetId
@@ -101,8 +101,10 @@ const Home = () => {
   const handleSiteGeneration = async () => {
     const isValidEmail = validateEmail()
     if (isValidEmail) {
-      await createPermalinkSheetIdMapping(permalink, sheetId, email)
-      setHasGeneratedSite(true)
+      const isSuccessful = await createPermalinkSheetIdMapping(permalink, sheetId, email)
+      isSuccessful
+        ? setHasGeneratedSite(true)
+        : setInvalidEmailErrMsg('There was an unexpected error. Please try again')
     } else {
       setInvalidEmailErrMsg('Please input a valid email')
     }

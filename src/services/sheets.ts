@@ -1,9 +1,13 @@
-import { isValidItemData, isValidSiteData } from '../utils/models'
+import { isValidItemData, isValidSiteData, SheetsData, SiteData, ItemData } from '../utils/models'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
 export const SITE_DATA_RANGE = 'site!A1:P2'
 export const LISTING_DATA_RANGE = 'listing!A1:G1000'
 export const BASE_URL = 'https://sheets.googleapis.com/v4/spreadsheets'
+
+/**
+ * FETCHING AND FORMATTING SHEETS DATA
+ */
 
 const toCamelCase = (str) => {
   return str
@@ -32,7 +36,7 @@ export const createArrayOfObjectsFromNestedArrays = (rawNestedArrayData) => {
   return arrayOfObjects
 }
 
-const formatSiteData = (rawSiteData) => {
+const formatSiteData = (rawSiteData): SiteData => {
   const siteData = createArrayOfObjectsFromNestedArrays(rawSiteData)[0]
   if (siteData !== undefined) {
     const { darkMode, ...rest } = siteData
@@ -45,7 +49,7 @@ const formatSiteData = (rawSiteData) => {
   return siteData
 }
 
-const formatListingData = (rawListingData) => {
+const formatListingData = (rawListingData): ItemData[] => {
   const listingData = createArrayOfObjectsFromNestedArrays(rawListingData)
   if (listingData !== undefined) {
     const formattedListingData = listingData.map((item) => {
@@ -59,19 +63,19 @@ const formatListingData = (rawListingData) => {
   return listingData
 }
 
-const formatSheetsData = (rawSheetsData) => {
-  let formattedSiteData
-  let formattedListingData
+const formatSheetsData = (rawSheetsData): SheetsData => {
+  let siteData: SiteData
+  let listingData: ItemData[]
 
   rawSheetsData.valueRanges.forEach((data) => {
     if (data.range === SITE_DATA_RANGE) {
-      formattedSiteData = formatSiteData(data.values)
+      siteData = formatSiteData(data.values)
     } else if (data.range === LISTING_DATA_RANGE) {
-      formattedListingData = formatListingData(data.values)
+      listingData = formatListingData(data.values)
     }
   })
 
-  return { formattedSiteData, formattedListingData }
+  return { siteData, listingData }
 }
 
 const fetchRawSheetsData = async (sheetId) => {
@@ -90,9 +94,9 @@ export const fetchAndFormatSheetsData = async (sheetId) => {
   }
 }
 
-const validateSiteData = (siteData) => {
-  return isValidSiteData(siteData)
-}
+/**
+ * VALIDATION SHEETS DATA
+ */
 
 const validateListingData = (listingData) => {
   let isValid = true
@@ -105,7 +109,11 @@ const validateListingData = (listingData) => {
   return isValid
 }
 
-export const validateSheetsData = (sheetsData) => {
-  const { formattedSiteData, formattedListingData } = sheetsData
-  return validateSiteData(formattedSiteData) && validateListingData(formattedListingData)
+const validateSiteData = (siteData) => {
+  return isValidSiteData(siteData)
+}
+
+export const validateSheetsData = (sheetsData: SheetsData) => {
+  const { siteData, listingData } = sheetsData
+  return validateSiteData(siteData) && validateListingData(listingData)
 }
