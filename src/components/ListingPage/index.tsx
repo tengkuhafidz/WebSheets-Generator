@@ -95,7 +95,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
 
   return (
     <div className={`${theme.background} min-h-screen`}>
-      <SEO image={siteLogo} title={siteName} description={`${heroTitle} - ${heroDescription}`} />
+      <SEO title={siteName} description={`${heroTitle} - ${heroDescription}`} />
       <Hero siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
       <Listing listingData={listingData} siteData={siteData} theme={theme} />
       <Footer siteData={siteData} theme={theme} />
