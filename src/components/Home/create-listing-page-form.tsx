@@ -8,6 +8,7 @@ interface Props {
   invalidPermalinkErrMsg: string
   unavailablePermalinkErrMsg: string
   sheetySiteUrl: string
+  isLoading: boolean
 }
 
 const CreateListingPageForm: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const CreateListingPageForm: React.FC<Props> = ({
   invalidPermalinkErrMsg,
   unavailablePermalinkErrMsg,
   sheetySiteUrl,
+  isLoading,
 }) => {
   const preventSpaceInput = (e) => {
     if (e.keyCode === 32) {
@@ -81,11 +83,13 @@ const CreateListingPageForm: React.FC<Props> = ({
       </div>
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className={`text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+            isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
+          }`}
           type="button"
           onClick={handleSubmitListingForm}
         >
-          Submit
+          {isLoading ? 'Loading...' : 'Submit'}
         </button>
       </div>
     </div>

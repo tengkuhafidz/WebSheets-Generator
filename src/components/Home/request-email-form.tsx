@@ -4,9 +4,15 @@ interface Props {
   handleEmailChange: (e) => void
   handleSiteGeneration: () => void
   invalidEmailErrMsg: string
+  isLoading: boolean
 }
 
-const RequestEmailForm: React.FC<Props> = ({ handleEmailChange, handleSiteGeneration, invalidEmailErrMsg }) => (
+const RequestEmailForm: React.FC<Props> = ({
+  handleEmailChange,
+  handleSiteGeneration,
+  invalidEmailErrMsg,
+  isLoading,
+}) => (
   <div className="text-center">
     <span className="text-6xl">💌</span>
     <h1 className="font-bold text-xl">Final Step! Please provide your email.</h1>
@@ -24,11 +30,13 @@ const RequestEmailForm: React.FC<Props> = ({ handleEmailChange, handleSiteGenera
       />
       <p className="text-red-500 text-xs text-left">{invalidEmailErrMsg}</p>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-8 border-b-4 border-blue-800"
+        className={`text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-8 border-b-4 border-blue-800 ${
+          isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 '
+        }`}
         type="button"
         onClick={handleSiteGeneration}
       >
-        Generate My SheetySite
+        {isLoading ? 'Loading...' : 'Generate My Site'}
       </button>
     </div>
   </div>

@@ -17,6 +17,7 @@ const Home = () => {
   const [unavailablePermalinkErrMsg, setUnavailablePermalinkErrMsg] = useState(null)
   const [hasPassedValidation, setHasPassedValidation] = useState(false)
   const [hasGeneratedSite, setHasGeneratedSite] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   /**
    * CREATE LISTING PAGE FORM FUNCTIONS
@@ -63,9 +64,12 @@ const Home = () => {
   const sheetySiteUrl = `https://sheety.site/p/${permalink}`
 
   const extractSheetIdFromUrl = (sheetsUrl: string): string => {
-    const pathsAsArray = sheetsUrl.replace(/^https?:\/\//, '').split('/')
-    const sheetId = pathsAsArray[3]
-    return sheetId
+    if (!!sheetsUrl) {
+      const pathsAsArray = sheetsUrl.replace(/^https?:\/\//, '').split('/')
+      const sheetId = pathsAsArray[3]
+      return sheetId
+    }
+    return null
   }
 
   const resetErrorMessages = () => {
@@ -75,14 +79,17 @@ const Home = () => {
   }
 
   const handleSubmitListingForm = async () => {
+    setIsLoading(true)
     resetErrorMessages()
-    setSheetId(extractSheetIdFromUrl(sheetsUrl))
-    const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(sheetId)
+    const extractedSheetId = extractSheetIdFromUrl(sheetsUrl)
+    const { isValidSheetsData, isValidPermalink, isPermalinkAvailable } = await validateInputs(extractedSheetId)
     if (isValidSheetsData && isValidPermalink && isPermalinkAvailable) {
       setHasPassedValidation(true)
+      setSheetId(extractedSheetId)
     } else {
       setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
     }
+    setIsLoading(false)
   }
 
   /**
@@ -99,6 +106,7 @@ const Home = () => {
   }
 
   const handleSiteGeneration = async () => {
+    setIsLoading(true)
     const isValidEmail = validateEmail()
     if (isValidEmail) {
       const isSuccessful = await createPermalinkSheetIdMapping(permalink, sheetId, email)
@@ -108,6 +116,7 @@ const Home = () => {
     } else {
       setInvalidEmailErrMsg('Please input a valid email')
     }
+    setIsLoading(false)
   }
 
   /**
@@ -123,6 +132,7 @@ const Home = () => {
           handleEmailChange={handleEmailChange}
           handleSiteGeneration={handleSiteGeneration}
           invalidEmailErrMsg={invalidEmailErrMsg}
+          isLoading={isLoading}
         />
       )
     } else {
@@ -135,6 +145,7 @@ const Home = () => {
           invalidPermalinkErrMsg={invalidPermalinkErrMsg}
           unavailablePermalinkErrMsg={unavailablePermalinkErrMsg}
           sheetySiteUrl={sheetySiteUrl}
+          isLoading={isLoading}
         />
       )
     }

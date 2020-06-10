@@ -8,6 +8,7 @@ import Footer from './footer'
 import Hero from './Hero'
 import Listing from './Listing'
 import SEO from './seo'
+import GridLoader from 'react-spinners/GridLoader'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
@@ -48,9 +49,17 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
     executeAsyncOperations()
   }, [permalink])
 
-  if (!siteData || !listingData) return <div>loading</div>
+  if (!siteData || !listingData) {
+    return (
+      <div className="flex h-screen">
+        <div className="mx-auto mt-64">
+          <GridLoader color={'#049663'} />
+        </div>
+      </div>
+    )
+  }
 
-  const { sitePrimaryColor, siteName, siteLogo, heroTitle, heroDescription } = siteData as SiteData
+  const { sitePrimaryColor, siteName, heroTitle, heroDescription } = siteData as SiteData
   let primaryColor = `${sitePrimaryColor}-500`
   switch (sitePrimaryColor) {
     case 'pink':
