@@ -15,7 +15,7 @@ const Navbar: React.FC<Props> = ({ title, logo, isDarkMode, handleDarkModeClick 
 
   const renderImage = () => {
     if (hasProperty(logo)) {
-      return <img src={logo} className="h-8 mr-2" />
+      return <img src={logo} className="h-8 mr-2 nav rounded" />
     }
     return <></>
   }
@@ -23,7 +23,7 @@ const Navbar: React.FC<Props> = ({ title, logo, isDarkMode, handleDarkModeClick 
   return (
     <div>
       <nav className={`container mx-auto py-8 flex`}>
-        <div className="px-4 flex">
+        <div className="px-4 flex items-center">
           {renderImage()}
           <span className={`font-bold text-lg tracking-tight text-gray-100 cursor-default`}>{title}</span>
         </div>

@@ -100,9 +100,9 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
 
   return (
     <div className="container mx-auto mt-16 mb-32 px-4" id="main">
-      <ul className="mt-4 flex justify-center">{renderTabs()}</ul>
+      <ul className="mt-4 flex flex-wrap justify-center">{renderTabs()}</ul>
       <input
-        className={`focus:outline-none focus:shadow-lg border border-gray-300 shadow rounded-lg py-2 px-4 block mt-8 w-1/2 mx-auto`}
+        className={`focus:outline-none focus:shadow-lg border border-gray-300 shadow rounded-lg py-2 px-4 block mt-8 w-full md:w-1/2 mx-auto`}
         type="text"
         placeholder="Search"
         onChange={(e) => handleSearch(e)}
