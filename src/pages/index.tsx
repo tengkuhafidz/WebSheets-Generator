@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
-import { fetchAndFormatSheetsData, validateSheetsData } from '../services/sheets'
-import { isAlphaNumericDash } from '../utils/util'
-import SuccessCard from '../components/Home/success-card'
-import RequestEmailForm from '../components/Home/request-email-form'
 import CreateListingPageForm from '../components/Home/create-listing-page-form'
+import RequestEmailForm from '../components/Home/request-email-form'
+import SuccessCard from '../components/Home/success-card'
+import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
+import { getSheetsData, validateSheetsData } from '../services/sheets'
+import { isAlphaNumericDash } from '../utils/util'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState(null)
   const [sheetId, setSheetId] = useState(null)
   const [permalink, setPermalink] = useState('<Permalink>')
-  const [email, setEmail] = useState('<Permalink>')
+  const [email, setEmail] = useState(null)
   const [invalidSheetsErrMsg, setInvalidSheetsErrMsg] = useState(null)
   const [invalidPermalinkErrMsg, setInvalidPermalinkErrMsg] = useState(null)
   const [invalidEmailErrMsg, setInvalidEmailErrMsg] = useState(null)
@@ -49,7 +49,7 @@ const Home = () => {
   }
 
   const validateInputs = async (sheetId) => {
-    const sheetsData = await fetchAndFormatSheetsData(sheetId)
+    const sheetsData = await getSheetsData(sheetId)
     const isValidSheetsData = !!sheetsData && validateSheetsData(sheetsData)
     const isValidPermalink = isAlphaNumericDash(permalink)
     const isPermalinkAvailable = await checkPermalinkAvailability(permalink)

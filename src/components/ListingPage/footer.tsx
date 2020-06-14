@@ -41,7 +41,7 @@ const Footer: React.FC<Props> = ({ siteData, theme }) => {
           </a>
         )
       }
-      return <></>
+      return <span key={socialMedia.faClass}></span>
     })
   }
   return (

@@ -15,23 +15,9 @@ export const isValidItemData = (object: any): object is ItemData => {
 
   const hasValidItemId = !!object.itemId
   const hasValidTitle = !!object.title
-  const hasValidSubtitle = !!object.subtitle
-  const hasValidDescription = !!object.description
-  const hasValidImage = !!object.image
-  const hasValidActionUrl = !!object.actionUrl
-  const hasValidTags = !!(object.tags && Array.isArray(object.tags))
 
-  return (
-    hasValidItemId &&
-    hasValidTitle &&
-    hasValidSubtitle &&
-    hasValidDescription &&
-    hasValidImage &&
-    hasValidActionUrl &&
-    hasValidTags
-  )
+  return hasValidItemId && hasValidTitle
 }
-
 export interface SiteData {
   siteName: string
   siteLogo: string
@@ -57,39 +43,19 @@ export const isValidSiteData = (object: any): object is SiteData => {
   }
 
   const hasValidSiteName = !!object.siteName
-  const hasValidSiteLogo = !!object.siteLogo
   const hasValidSitePrimaryColor = !!object.sitePrimaryColor
   const hasValidDarkMode = object.darkMode !== undefined
   const hasValidHeroType = !!object.heroType
   const hasValidHeroTitle = !!object.heroTitle
   const hasValidHeroDescription = !!object.heroDescription
-  const hasValidHeroButtonLabel = !!object.heroButtonLabel
-  const hasValidHeroButtonUrl = !!object.heroButtonUrl
-  const hasValidListingType = !!object.listingType
-  const hasValidListingDescriptionButtonLabel = !!object.listingDescriptionButtonLabel
-  const hasValidListingUrlButtonLabel = !!object.listingUrlButtonLabel
-  const hasValidFooterLabel = !!object.footerLabel
-  const hasValidFacebookUrl = !!object.facebookUrl
-  const hasValidInstagramUrl = !!object.instagramUrl
-  const hasValidTwitterUrl = !!object.twitterUrl
 
   return (
     hasValidSiteName &&
-    hasValidSiteLogo &&
     hasValidSitePrimaryColor &&
     hasValidDarkMode &&
     hasValidHeroType &&
     hasValidHeroTitle &&
-    hasValidHeroDescription &&
-    hasValidHeroButtonLabel &&
-    hasValidHeroButtonUrl &&
-    hasValidListingType &&
-    hasValidListingDescriptionButtonLabel &&
-    hasValidListingUrlButtonLabel &&
-    hasValidFooterLabel &&
-    hasValidFacebookUrl &&
-    hasValidInstagramUrl &&
-    hasValidTwitterUrl
+    hasValidHeroDescription
   )
 }
 

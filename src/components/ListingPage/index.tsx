@@ -2,7 +2,7 @@ import { RouteComponentProps } from '@reach/router'
 import { navigate } from 'gatsby'
 import React, { useEffect, useState } from 'react'
 import { findSheetIdByPermalink } from '../../services/firebase'
-import { fetchAndFormatSheetsData, validateSheetsData } from '../../services/sheets'
+import { getSheetsData } from '../../services/sheets'
 import { SiteData } from '../../utils/models'
 import Footer from './footer'
 import Hero from './Hero'
@@ -36,11 +36,10 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
         return
       }
 
-      const sheetsData = await fetchAndFormatSheetsData(sheetId)
-      const isValidSheetsData = validateSheetsData(sheetsData)
+      const { siteData, listingData } = await getSheetsData(sheetId)
 
-      if (isValidSheetsData) {
-        setSheetsData(sheetsData.siteData, sheetsData.listingData)
+      if (siteData && listingData) {
+        setSheetsData(siteData, listingData)
       } else {
         navigate('/')
       }
