@@ -4,8 +4,6 @@ export const isAlphaNumericDash = (str): boolean => {
   return regexp.test(str)
 }
 
-export const hasProperty = (property) => property && property !== 'nil'
-
 export const fetchData = async (url) => {
   const data = await fetch(url)
   return await data.json()

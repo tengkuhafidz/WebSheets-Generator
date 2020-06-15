@@ -1,6 +1,5 @@
 import React from 'react'
 import { Theme } from '../../../../utils/models'
-import { hasProperty } from '../../../../utils/util'
 
 interface Props {
   title: string
@@ -14,7 +13,7 @@ const Navbar: React.FC<Props> = ({ title, logo, isDarkMode, handleDarkModeClick 
   const darkModeIcon = isDarkMode ? 'fa-sun' : 'fa-moon'
 
   const renderImage = () => {
-    if (hasProperty(logo)) {
+    if (!!logo) {
       return <img src={logo} className="h-8 mr-2 nav rounded" />
     }
     return <></>

@@ -9,25 +9,17 @@ interface Props {
 }
 
 const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) => {
-  const hasProperty = (property) => property && property !== 'nil'
   const { primary, customShadow } = theme
 
   const renderImage = () => {
-    if (hasProperty(item.image)) {
+    if (!!item.image) {
       return <img className="w-full rounded-t-lg h-48 object-cover" src={item.image} alt={`Image of ${item.title}`} />
     }
     return <></>
   }
 
-  const renderTitle = () => {
-    if (hasProperty(item.title)) {
-      return <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
-    }
-    return <></>
-  }
-
   const renderSubtitle = () => {
-    if (hasProperty(item.subtitle)) {
+    if (!!item.subtitle) {
       return <p className={`text-gray-600 font-light truncate`}>{item.subtitle}</p>
     }
     return <></>
@@ -37,12 +29,12 @@ const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) 
     <div className={`rounded-lg shadow-lg text-center bg-white mb-8`}>
       {renderImage()}
       <div className="px-6 py-4">
-        {renderTitle()}
+        <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
         <button
           onClick={(e) => handleOpenModal(e, item)}
           className={`py-2 px-4 rounded w-full bg-${primary} text-white mt-4 ${
-            hasProperty(item.description) && `hover:${customShadow} cursor-pointer`
+            !!item.description && `hover:${customShadow} cursor-pointer`
           }`}
         >
           {siteData.listingDescriptionButtonLabel}

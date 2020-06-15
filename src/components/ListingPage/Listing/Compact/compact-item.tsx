@@ -8,25 +8,17 @@ interface Props {
 }
 
 const CompactItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
-  const hasProperty = (property) => property && property !== 'nil'
   const { altBackground, text, subtext, customShadow } = theme
 
   const renderImage = () => {
-    if (hasProperty(item.image)) {
+    if (!!item.image) {
       return <img className="w-full rounded-t-lg h-24 object-cover" src={item.image} alt={`Image of ${item.title}`} />
     }
     return <></>
   }
 
-  const renderTitle = () => {
-    if (hasProperty(item.title)) {
-      return <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
-    }
-    return <></>
-  }
-
   const renderSubtitle = () => {
-    if (hasProperty(item.subtitle)) {
+    if (!!item.subtitle) {
       return <p className={`${subtext} font-light truncate`}>{item.subtitle}</p>
     }
     return <></>
@@ -35,13 +27,13 @@ const CompactItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
   return (
     <div
       className={`max-w-sm rounded-lg shadow-lg mb-8 ${altBackground} ${
-        hasProperty(item.actionUrl) && `hover:${customShadow} cursor-pointer`
+        !!item.actionUrl && `hover:${customShadow} cursor-pointer`
       }`}
       onClick={(e) => handleOpenModal(e, item)}
     >
       {renderImage()}
       <div className="px-6 py-4">
-        {renderTitle()}
+        <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
       </div>
     </div>
