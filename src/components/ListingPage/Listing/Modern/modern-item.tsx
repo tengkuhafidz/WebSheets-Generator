@@ -18,13 +18,21 @@ const ModernItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
     return <></>
   }
 
+  const handleItemClick = (e, item: ItemData) => {
+    if (!!item.description) {
+      handleOpenModal(e, item)
+    } else if (!!item.actionUrl && window !== undefined) {
+      window.location.href = item.actionUrl
+    }
+  }
+
   return (
     <div
       className={`max-w-sm bg-cover bg-center rounded-lg shadow-lg mb-8 text-center py-8 font-bold bg-gray-600 ${
-        !!item.description && `hover:${customShadow} cursor-pointer`
+        (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
       style={{ backgroundImage: `url(${image})`, textShadow: `1px 1px #333333` }}
-      onClick={(e) => handleOpenModal(e, item)}
+      onClick={(e) => handleItemClick(e, item)}
     >
       <div className="px-6 py-4">
         <div className={`font-bold text-white text-xl truncate`}>{item.title}</div>

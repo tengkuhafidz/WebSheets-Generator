@@ -4,10 +4,9 @@ import { ItemData, Theme } from '../../../../utils/models'
 interface Props {
   item: ItemData
   theme: Theme
-  handleOpenModal: (e, item: ItemData) => void
 }
 
-const ProfileItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
+const ProfileItem: React.FC<Props> = ({ item, theme }) => {
   const { customShadow } = theme
 
   const renderImage = () => {
@@ -39,11 +38,13 @@ const ProfileItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
   }
 
   return (
-    <div
+    <a
       className={`max-w-sm rounded-lg shadow-lg bg-white mb-8 ${
         !!item.actionUrl && `hover:${customShadow} cursor-pointer`
       }`}
-      onClick={(e) => handleOpenModal(e, item)}
+      href={item.actionUrl}
+      target="_blank"
+      rel="noreferrer"
     >
       {renderImage()}
       <div className="px-6 py-6">
@@ -51,7 +52,7 @@ const ProfileItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
         {renderSubtitle()}
         {renderDescription()}
       </div>
-    </div>
+    </a>
   )
 }
 

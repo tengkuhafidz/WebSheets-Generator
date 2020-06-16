@@ -37,13 +37,9 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
     return <></>
   }
 
-  return (
-    <div className={`rounded-lg shadow-lg bg-white mb-8 p-8 grid md:grid-cols-5 gap-3`}>
-      {renderImage()}
-      <div className="px-6 md:col-span-3">
-        <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
-        {renderSubtitle()}
-        {renderDescription()}
+  const renderActionButton = () => {
+    if (!!item.actionUrl) {
+      return (
         <a
           className={`py-2 px-16 rounded bg-${primary} hidden text-white text-center ${
             !!item.actionUrl && `hover:${customShadow} cursor-pointer block md:inline`
@@ -54,6 +50,19 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
         >
           {siteData.listingUrlButtonLabel}
         </a>
+      )
+    }
+    return <></>
+  }
+
+  return (
+    <div className={`rounded-lg shadow-lg bg-white mb-8 p-8 grid md:grid-cols-5 gap-3`}>
+      {renderImage()}
+      <div className="px-6 md:col-span-3">
+        <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
+        {renderSubtitle()}
+        {renderDescription()}
+        {renderActionButton()}
       </div>
     </div>
   )
