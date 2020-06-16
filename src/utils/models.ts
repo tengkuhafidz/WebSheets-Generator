@@ -8,16 +8,6 @@ export interface ItemData {
   tags: string[]
 }
 
-export const isValidItemData = (object: any): object is ItemData => {
-  if (!object) {
-    return false
-  }
-
-  const hasValidItemId = !!object.itemId
-  const hasValidTitle = !!object.title
-
-  return hasValidItemId && hasValidTitle
-}
 export interface SiteData {
   siteName: string
   siteLogo: string
@@ -35,28 +25,6 @@ export interface SiteData {
   facebookUrl: string
   instagramUrl: string
   twitterUrl: string
-}
-
-export const isValidSiteData = (object: any): object is SiteData => {
-  if (!object) {
-    return false
-  }
-
-  const hasValidSiteName = !!object.siteName
-  const hasValidSitePrimaryColor = !!object.sitePrimaryColor
-  const hasValidDarkMode = object.darkMode !== undefined
-  const hasValidHeroType = !!object.heroType
-  const hasValidHeroTitle = !!object.heroTitle
-  const hasValidHeroDescription = !!object.heroDescription
-
-  return (
-    hasValidSiteName &&
-    hasValidSitePrimaryColor &&
-    hasValidDarkMode &&
-    hasValidHeroType &&
-    hasValidHeroTitle &&
-    hasValidHeroDescription
-  )
 }
 
 export interface SheetsData {

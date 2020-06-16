@@ -3,7 +3,7 @@ import { navigate } from 'gatsby'
 import React, { useEffect, useState } from 'react'
 import { findSheetIdByPermalink } from '../../services/firebase'
 import { getSheetsData } from '../../services/sheets'
-import { SiteData } from '../../utils/models'
+import { SiteData, SheetsData } from '../../utils/models'
 import Footer from './footer'
 import Hero from './Hero'
 import Listing from './Listing'
@@ -18,10 +18,11 @@ interface Props
 
 const ListingPage: React.FC<Props> = ({ permalink }) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const [siteData, setSiteData] = useState()
-  const [listingData, setListingData] = useState()
+  const [siteData, setSiteData] = useState(null)
+  const [listingData, setListingData] = useState(null)
 
-  const setSheetsData = (siteData, listingData) => {
+  const setSheetsData = (sheetsData: SheetsData) => {
+    const { siteData, listingData } = sheetsData
     setSiteData(siteData)
     setIsDarkMode(siteData.darkMode)
     setListingData(listingData)
@@ -36,10 +37,10 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
         return
       }
 
-      const { siteData, listingData } = await getSheetsData(sheetId)
+      const sheetsData = await getSheetsData(sheetId)
 
-      if (siteData && listingData) {
-        setSheetsData(siteData, listingData)
+      if (!!sheetsData) {
+        setSheetsData(sheetsData)
       } else {
         navigate('/')
       }
@@ -58,7 +59,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
     )
   }
 
-  const { sitePrimaryColor, siteName, heroTitle, heroDescription } = siteData as SiteData
+  const { sitePrimaryColor, heroTitle, heroDescription } = siteData as SiteData
   let primaryColor = `${sitePrimaryColor}-500`
   switch (sitePrimaryColor) {
     case 'pink':
@@ -103,7 +104,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
 
   return (
     <div className={`${theme.background} min-h-screen`}>
-      <SEO title={siteName} description={`${heroTitle} - ${heroDescription}`} />
+      <SEO title={heroTitle} description={`${heroDescription}`} />
       <Hero siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
       <Listing listingData={listingData} siteData={siteData} theme={theme} />
       <Footer siteData={siteData} theme={theme} />

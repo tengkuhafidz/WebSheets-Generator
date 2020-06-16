@@ -50,7 +50,7 @@ const Home = () => {
 
   const validateInputs = async (sheetId) => {
     const sheetsData = await getSheetsData(sheetId)
-    const isValidSheetsData = !!sheetsData && validateSheetsData(sheetsData)
+    const isValidSheetsData = !!sheetsData
     const isValidPermalink = isAlphaNumericDash(permalink)
     const isPermalinkAvailable = await checkPermalinkAvailability(permalink)
 

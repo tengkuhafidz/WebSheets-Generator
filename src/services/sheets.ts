@@ -1,4 +1,4 @@
-import { isValidItemData, isValidSiteData, SheetsData, SiteData, ItemData } from '../utils/models'
+import { HeroType, ItemData, ListingType, SheetsData } from '../utils/models'
 import { fetchData } from '../utils/util'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
@@ -105,16 +105,16 @@ const transformSiteData = (rawSiteData) => {
   } = rawSiteDataObject
 
   return {
-    siteName,
+    siteName: siteName || 'SheetySite',
     siteLogo,
-    sitePrimaryColor,
+    sitePrimaryColor: sitePrimaryColor || 'teal',
     darkMode: darkMode === 'true',
-    heroType,
-    heroTitle,
-    heroDescription,
-    heroButtonLabel,
+    heroType: heroType || HeroType.MINIMAL,
+    heroTitle: heroTitle || 'My List',
+    heroDescription: heroDescription || 'Check out this list that I personally curated',
+    heroButtonLabel: heroButtonLabel || 'Contact',
     heroButtonUrl,
-    listingType,
+    listingType: listingType || ListingType.BASIC_3,
     listingDescriptionButtonLabel: listingDescriptionButtonLabel || 'More Info',
     listingUrlButtonLabel: listingUrlButtonLabel || 'View Details',
     footerLabel,
@@ -134,116 +134,25 @@ const fetchAndTransformSiteData = async (sheetId) => {
   return transformSiteData(rawSiteData)
 }
 
+const validateListingData = (listingData: ItemData[]) => {
+  const listingItemWithoutTitle = listingData.find((item) => !item.title)
+  if (listingItemWithoutTitle) {
+    return false
+  }
+  return true
+}
+
 export const getSheetsData = async (sheetId): Promise<SheetsData> => {
   const siteData = await fetchAndTransformSiteData(sheetId)
   const listingData = await fetchAndTransformListingData(sheetId)
 
-  console.log('>>> siteData', siteData)
-  console.log('>>> listingData', listingData)
+  const isValidData = validateListingData(listingData)
 
-  return {
-    siteData,
-    listingData,
-  }
-}
-
-/**
- * FETCHING AND FORMATTING SHEETS DATA
- */
-
-export const createArrayOfObjectsFromNestedArrays = (rawNestedArrayData) => {
-  const [rawObjectKeys, ...allObjectValues] = rawNestedArrayData
-  const objectKeys = rawObjectKeys.map((key) => formatKey(key))
-
-  const arrayOfObjects = allObjectValues.map((singleObjectValues) => {
-    const singleObject = {}
-    objectKeys.forEach((objKey, index) => {
-      singleObject[objKey] = singleObjectValues[index]
-    })
-    return singleObject
-  })
-
-  return arrayOfObjects
-}
-
-const formatSiteData = (rawSiteData): SiteData => {
-  const siteData = createArrayOfObjectsFromNestedArrays(rawSiteData)[0]
-  if (siteData !== undefined) {
-    const { darkMode, ...rest } = siteData
-    const formattedSiteData = {
-      ...rest,
-      darkMode: darkMode === 'TRUE',
+  if (isValidData) {
+    return {
+      siteData,
+      listingData,
     }
-    return formattedSiteData
   }
-  return siteData
-}
-
-const formatListingData = (rawListingData): ItemData[] => {
-  const listingData = createArrayOfObjectsFromNestedArrays(rawListingData)
-  if (listingData !== undefined) {
-    const formattedListingData = listingData.map((item) => {
-      if (typeof item.tags === 'string') {
-        item.tags = item.tags.split(', ')
-      }
-      return item
-    })
-    return formattedListingData
-  }
-  return listingData
-}
-
-const formatSheetsData = (rawSheetsData): SheetsData => {
-  let siteData: SiteData
-  let listingData: ItemData[]
-
-  rawSheetsData.valueRanges.forEach((data) => {
-    if (data.range === SITE_DATA_RANGE) {
-      siteData = formatSiteData(data.values)
-    } else if (data.range === LISTING_DATA_RANGE) {
-      listingData = formatListingData(data.values)
-    }
-  })
-
-  return { siteData, listingData }
-}
-
-const fetchRawSheetsData = async (sheetId) => {
-  const sheetsApiUrl = `${BASE_URL}/${sheetId}/values:batchGet?ranges=${SITE_DATA_RANGE}&ranges=${LISTING_DATA_RANGE}&key=${API_KEY}`
-  const fetchSheetsData = await fetch(sheetsApiUrl)
-  const rawSheetsData = await fetchSheetsData.json()
-  return rawSheetsData
-}
-
-export const fetchAndFormatSheetsData = async (sheetId) => {
-  try {
-    const rawSheetsData = await fetchRawSheetsData(sheetId)
-    return formatSheetsData(rawSheetsData)
-  } catch (e) {
-    return null
-  }
-}
-
-/**
- * VALIDATION SHEETS DATA
- */
-
-const validateListingData = (listingData) => {
-  let isValid = true
-  listingData.forEach((item) => {
-    if (!isValidItemData(item)) {
-      isValid = false
-    }
-  })
-
-  return isValid
-}
-
-const validateSiteData = (siteData) => {
-  return isValidSiteData(siteData)
-}
-
-export const validateSheetsData = (sheetsData: SheetsData) => {
-  const { siteData, listingData } = sheetsData
-  return validateSiteData(siteData) && validateListingData(listingData)
+  return null
 }
