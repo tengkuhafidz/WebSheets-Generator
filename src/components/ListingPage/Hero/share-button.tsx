@@ -75,7 +75,7 @@ const ShareButton: React.FC<Props> = ({ siteData, theme, outlineColor }) => {
   }
 
   return (
-    <div className="relative mt-4 md:mt-0 md:ml-4 md:inline md:w-screen py-4">
+    <div className="relative mt-4 md:mt-0 md:inline md:w-screen py-4">
       <a
         className={`border border-${outlineColor} text-${outlineColor} py-3 px-6 rounded-lg cursor-pointer`}
         onClick={() => handleShareButtonClick()}

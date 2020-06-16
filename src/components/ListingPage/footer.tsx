@@ -44,6 +44,7 @@ const Footer: React.FC<Props> = ({ siteData, theme }) => {
       return <span key={socialMedia.faClass}></span>
     })
   }
+
   return (
     <div className={`py-4 font-light ${subtext}`}>
       <div className="container mx-auto text-gray-600 text-center my-2">{renderSocialMediaLinks()}</div>
