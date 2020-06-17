@@ -18,6 +18,7 @@ export interface SiteData {
   heroDescription: string
   heroButtonLabel: string
   heroButtonUrl: string
+  socialShareButton: boolean
   listingType: ListingType
   listingDescriptionButtonLabel: string
   listingUrlButtonLabel: string
