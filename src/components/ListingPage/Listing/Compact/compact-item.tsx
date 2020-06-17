@@ -24,12 +24,20 @@ const CompactItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
     return <></>
   }
 
+  const handleItemClick = (e, item: ItemData) => {
+    if (!!item.description) {
+      handleOpenModal(e, item)
+    } else if (!!item.actionUrl && window !== undefined) {
+      window.open('item.actionUrl', '_blank')
+    }
+  }
+
   return (
     <div
       className={`max-w-sm rounded-lg shadow-lg mb-8 ${altBackground} ${
-        !!item.actionUrl && `hover:${customShadow} cursor-pointer`
+        (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
-      onClick={(e) => handleOpenModal(e, item)}
+      onClick={(e) => handleItemClick(e, item)}
     >
       {renderImage()}
       <div className="px-6 py-4">

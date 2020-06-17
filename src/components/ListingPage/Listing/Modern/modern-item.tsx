@@ -22,7 +22,7 @@ const ModernItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
     if (!!item.description) {
       handleOpenModal(e, item)
     } else if (!!item.actionUrl && window !== undefined) {
-      window.location.href = item.actionUrl
+      window.open('item.actionUrl', '_blank')
     }
   }
 

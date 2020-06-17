@@ -17,7 +17,7 @@ const SimpleBody: React.FC<Props> = ({ siteData, theme, isCenter }) => {
       <p className={`font-thin text-xl text-gray-100`}>{heroDescription}</p>
       <div className="my-12">
         <a
-          className={`${background} ${text} py-3 px-6 rounded-lg`}
+          className={`${background} ${text} py-3 px-6 rounded-lg md:mr-4`}
           href={heroButtonUrl}
           target="_blank"
           rel="noopener noreferrer"

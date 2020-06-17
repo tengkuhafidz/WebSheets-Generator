@@ -25,20 +25,38 @@ const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) 
     return <></>
   }
 
+  const handleButtonClick = (e, item: ItemData) => {
+    if (!!item.description) {
+      handleOpenModal(e, item)
+    } else if (!!item.actionUrl && window !== undefined) {
+      window.open('item.actionUrl', '_blank')
+    }
+  }
+
+  const renderButton = () => {
+    const buttonLabel = !!item.description ? siteData.listingDescriptionButtonLabel : siteData.listingUrlButtonLabel
+    if (!!item.description || !!item.actionUrl) {
+      return (
+        <button
+          onClick={(e) => handleButtonClick(e, item)}
+          className={`py-2 px-4 rounded w-full bg-${primary} text-white mt-4 ${
+            !!item.description && `hover:${customShadow} cursor-pointer`
+          }`}
+        >
+          {buttonLabel}
+        </button>
+      )
+    }
+    return <></>
+  }
+
   return (
     <div className={`rounded-lg shadow-lg text-center bg-white mb-8`}>
       {renderImage()}
       <div className="px-6 py-4">
         <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
-        <button
-          onClick={(e) => handleOpenModal(e, item)}
-          className={`py-2 px-4 rounded w-full bg-${primary} text-white mt-4 ${
-            !!item.description && `hover:${customShadow} cursor-pointer`
-          }`}
-        >
-          {siteData.listingDescriptionButtonLabel}
-        </button>
+        {renderButton()}
       </div>
     </div>
   )
