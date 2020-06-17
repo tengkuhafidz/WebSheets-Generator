@@ -2,6 +2,8 @@ import React from 'react'
 import { HeroType, SiteData, Theme } from '../../../utils/models'
 import Minimal from './Minimal'
 import Simple from './Simple'
+import Navbar from './navbar'
+import Body from './body'
 
 interface Props {
   siteData: SiteData
@@ -13,40 +15,26 @@ interface Props {
 const Hero: React.FC<Props> = ({ siteData, theme, isDarkMode, handleDarkModeClick }) => {
   const { heroType } = siteData
 
-  switch (heroType) {
-    case HeroType.MINIMAL:
-      return (
-        <Minimal siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
-      )
-    case HeroType.MINIMAL_CENTER:
-      return (
-        <Minimal
-          siteData={siteData}
-          theme={theme}
-          isDarkMode={isDarkMode}
-          handleDarkModeClick={handleDarkModeClick}
-          isCenter
-        />
-      )
-    case HeroType.SIMPLE:
-      return (
-        <Simple siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
-      )
-    case HeroType.SIMPLE_CENTER:
-      return (
-        <Simple
-          siteData={siteData}
-          theme={theme}
-          isDarkMode={isDarkMode}
-          handleDarkModeClick={handleDarkModeClick}
-          isCenter
-        />
-      )
-    default:
-      return (
-        <Minimal siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
-      )
-  }
+  const heroBg =
+    heroType === HeroType.SIMPLE || heroType === HeroType.SIMPLE_CENTER
+      ? `bg-${isDarkMode ? theme.secondary : theme.primary}`
+      : ''
+
+  const isCenter = heroType === HeroType.SIMPLE_CENTER || heroType === HeroType.MINIMAL_CENTER ? true : false
+
+  return (
+    <div className={heroBg}>
+      <Navbar
+        title={siteData.siteName}
+        logo={siteData.siteLogo}
+        theme={theme}
+        isDarkMode={isDarkMode}
+        heroType={heroType}
+        handleDarkModeClick={handleDarkModeClick}
+      />
+      <Body siteData={siteData} theme={theme} heroType={heroType} isCenter={isCenter} />
+    </div>
+  )
 }
 
 export default Hero
