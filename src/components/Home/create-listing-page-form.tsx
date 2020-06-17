@@ -34,7 +34,7 @@ const CreateListingPageForm: React.FC<Props> = ({
         <p className="block text-gray-700 text-sm font-bold mb-2">
           1. Make a copy of SheetySite template to you Google Drive by clicking &nbsp;
           <a
-            href="https://docs.google.com/spreadsheets/d/1S-S1dzVsPlbYtYTq_jiXCcVYKf75wFlGxB2fKkdVc7w/copy#gid=863715774"
+            href="https://docs.google.com/spreadsheets/d/16x6gtYQl7TAhehSqcaf_SAMDKNpEgoMxAGgMpQ7NUMs/copy#gid=863715774"
             target="_blank"
             rel="noreferrer"
             className="text-blue-600"

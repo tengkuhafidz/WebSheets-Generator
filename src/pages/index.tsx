@@ -3,7 +3,7 @@ import CreateListingPageForm from '../components/Home/create-listing-page-form'
 import RequestEmailForm from '../components/Home/request-email-form'
 import SuccessCard from '../components/Home/success-card'
 import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
-import { getSheetsData, validateSheetsData } from '../services/sheets'
+import { getSheetsData } from '../services/sheets'
 import { isAlphaNumericDash } from '../utils/util'
 
 const Home = () => {
