@@ -4,7 +4,6 @@ import RequestEmailForm from '../components/Home/request-email-form'
 import SuccessCard from '../components/Home/success-card'
 import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
 import { getSheetsData } from '../services/sheets'
-import { isAlphaNumericDash } from '../utils/util'
 import { gtagEventClick } from '../utils/gtag'
 
 const Home = () => {
@@ -47,6 +46,12 @@ const Home = () => {
     if (!isPermalinkAvailable) {
       setUnavailablePermalinkErrMsg('Permalink has already been taken.')
     }
+  }
+
+  // allows for alphabets, numbers, underscore, dash
+  const isAlphaNumericDash = (str): boolean => {
+    const regexp = /^[a-z0-9_\-]+$/i
+    return regexp.test(str)
   }
 
   const validateInputs = async (sheetId) => {
