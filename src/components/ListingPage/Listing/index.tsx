@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { ItemData, ListingType, SiteData, Theme } from '../../../utils/models'
 import Events from './Events'
 import ListingItems from './listing-items'
+import { gtagEventClick } from '../../../utils/gtag'
 
 interface Props {
   theme: Theme
@@ -61,12 +62,15 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
 
   const { text, altBackground } = theme
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: string) => {
+    gtagEventClick('click_filter_tab', tab)
     setCurrentTab(tab)
   }
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value)
+    const searchTerm = e.target.value
+    gtagEventClick('search', searchTerm)
+    setSearchTerm(searchTerm)
   }
 
   const renderTabs = () => {

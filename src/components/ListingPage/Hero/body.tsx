@@ -1,6 +1,8 @@
 import React from 'react'
+import { OutboundLink } from 'gatsby-plugin-google-gtag'
 import { SiteData, Theme, HeroType } from '../../../utils/models'
 import ShareButton from './share-button'
+import { gtagEventClick } from '../../../utils/gtag'
 
 interface Props {
   siteData: SiteData
@@ -35,15 +37,16 @@ const Body: React.FC<Props> = ({ siteData, theme, heroType, isCenter }) => {
   const renderActionButton = () => {
     if (!!heroButtonUrl) {
       return (
-        <a
+        <OutboundLink
           className={`${actionButtonColors} py-3 px-6 rounded-lg md:mr-4`}
           href={heroButtonUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => gtagEventClick('click_hero_action', `${heroButtonLabel}: ${heroButtonUrl}`)}
         >
           {heroButtonLabel}
           <i className="fas fa-share ml-2"></i>
-        </a>
+        </OutboundLink>
       )
     }
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { ItemData, Theme } from '../../../../utils/models'
+import { gtagEventClick } from '../../../../utils/gtag'
 
 interface Props {
   item: ItemData
@@ -20,9 +21,11 @@ const ModernItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
 
   const handleItemClick = (e, item: ItemData) => {
     if (!!item.description) {
+      gtagEventClick('open_item_modal', item.title)
       handleOpenModal(e, item)
     } else if (!!item.actionUrl && window !== undefined) {
-      window.open('item.actionUrl', '_blank')
+      gtagEventClick('click_item_action', item.actionUrl)
+      window.open(item.actionUrl, '_blank')
     }
   }
 

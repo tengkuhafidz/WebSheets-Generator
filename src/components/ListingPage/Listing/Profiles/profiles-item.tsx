@@ -1,5 +1,7 @@
 import React from 'react'
 import { ItemData, Theme } from '../../../../utils/models'
+import { OutboundLink } from 'gatsby-plugin-google-gtag'
+import { gtagEventClick } from '../../../../utils/gtag'
 
 interface Props {
   item: ItemData
@@ -38,13 +40,14 @@ const ProfileItem: React.FC<Props> = ({ item, theme }) => {
   }
 
   return (
-    <a
+    <OutboundLink
       className={`max-w-sm rounded-lg shadow-lg bg-white mb-8 ${
         !!item.actionUrl && `hover:${customShadow} cursor-pointer`
       }`}
       href={item.actionUrl}
       target="_blank"
       rel="noreferrer"
+      onClick={() => gtagEventClick('click_item_action', item.actionUrl)}
     >
       {renderImage()}
       <div className="px-6 py-6">
@@ -52,7 +55,7 @@ const ProfileItem: React.FC<Props> = ({ item, theme }) => {
         {renderSubtitle()}
         {renderDescription()}
       </div>
-    </a>
+    </OutboundLink>
   )
 }
 

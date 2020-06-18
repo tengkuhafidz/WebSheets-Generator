@@ -9,6 +9,7 @@ import Hero from './Hero'
 import Listing from './Listing'
 import SEO from './seo'
 import GridLoader from 'react-spinners/GridLoader'
+import { gtagEventClick } from '../../utils/gtag'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
@@ -97,6 +98,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
   }
 
   const handleDarkModeClick = () => {
+    gtagEventClick('toggle_dark_mode', (!isDarkMode).toString())
     setIsDarkMode(!isDarkMode)
   }
 

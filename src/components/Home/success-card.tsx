@@ -1,4 +1,6 @@
 import React from 'react'
+import { OutboundLink } from 'gatsby-plugin-google-gtag'
+import { gtagEventClick } from '../../utils/gtag'
 
 interface Props {
   sheetySiteUrl: string
@@ -10,9 +12,15 @@ const SuccessCard: React.FC<Props> = ({ sheetySiteUrl }) => (
     <h1 className="font-bold text-xl mb-4">Your SheetySite has been generated!</h1>
     <p>
       You may check it out at:&nbsp;
-      <a href={sheetySiteUrl} target="_blank" rel="noreferrer" className="text-blue-600">
+      <OutboundLink
+        href={sheetySiteUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="text-blue-600"
+        onClick={() => gtagEventClick('open_generated_sheetysite', sheetySiteUrl)}
+      >
         {sheetySiteUrl}
-      </a>
+      </OutboundLink>
     </p>
   </div>
 )

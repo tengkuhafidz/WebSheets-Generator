@@ -1,4 +1,6 @@
 import React from 'react'
+import { OutboundLink } from 'gatsby-plugin-google-gtag'
+import { gtagEventClick } from '../../utils/gtag'
 
 interface Props {
   handleSheetsUrlChange: (e) => void
@@ -33,14 +35,15 @@ const CreateListingPageForm: React.FC<Props> = ({
       <div className="mb-4">
         <p className="block text-gray-700 text-sm font-bold mb-2">
           1. Make a copy of SheetySite template to you Google Drive by clicking &nbsp;
-          <a
+          <OutboundLink
             href="https://docs.google.com/spreadsheets/d/16x6gtYQl7TAhehSqcaf_SAMDKNpEgoMxAGgMpQ7NUMs/copy#gid=863715774"
             target="_blank"
             rel="noreferrer"
             className="text-blue-600"
+            onClick={() => gtagEventClick('open_sheets_template')}
           >
             here
-          </a>
+          </OutboundLink>
         </p>
       </div>
       <div className="mb-4">

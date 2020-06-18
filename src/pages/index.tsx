@@ -5,6 +5,7 @@ import SuccessCard from '../components/Home/success-card'
 import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
 import { getSheetsData } from '../services/sheets'
 import { isAlphaNumericDash } from '../utils/util'
+import { gtagEventClick } from '../utils/gtag'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState(null)
@@ -89,6 +90,10 @@ const Home = () => {
     } else {
       setErrorMessages(isValidSheetsData, isValidPermalink, isPermalinkAvailable)
     }
+    gtagEventClick(
+      'submit_listing_form',
+      `Permalink: ${permalink}. Successful? ${isValidSheetsData && isValidPermalink && isPermalinkAvailable}`,
+    )
     setIsLoading(false)
   }
 
@@ -116,6 +121,7 @@ const Home = () => {
     } else {
       setInvalidEmailErrMsg('Please input a valid email')
     }
+    gtagEventClick('provide_email_form', `Email: ${email}. Successful? ${isValidEmail}`)
     setIsLoading(false)
   }
 

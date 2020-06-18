@@ -1,5 +1,7 @@
 import React from 'react'
 import { ItemData, Theme, SiteData } from '../../../../utils/models'
+import { OutboundLink } from 'gatsby-plugin-google-gtag'
+import { gtagEventClick } from '../../../../utils/gtag'
 
 interface Props {
   item: ItemData
@@ -40,16 +42,17 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const renderActionButton = () => {
     if (!!item.actionUrl) {
       return (
-        <a
+        <OutboundLink
           className={`py-2 px-16 rounded bg-${primary} hidden text-white text-center ${
             !!item.actionUrl && `hover:${customShadow} cursor-pointer block md:inline`
           }`}
           href={item.actionUrl}
           target="_blank"
           rel="noreferrer"
+          onClick={() => gtagEventClick('click_item_action', item.actionUrl)}
         >
           {siteData.listingUrlButtonLabel}
-        </a>
+        </OutboundLink>
       )
     }
     return <></>

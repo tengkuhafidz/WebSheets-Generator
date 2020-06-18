@@ -1,9 +1,7 @@
 import React from 'react'
 import { HeroType, SiteData, Theme } from '../../../utils/models'
-import Minimal from './Minimal'
-import Simple from './Simple'
-import Navbar from './navbar'
 import Body from './body'
+import Navbar from './navbar'
 
 interface Props {
   siteData: SiteData
