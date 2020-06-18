@@ -33,12 +33,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyTSTW`,
-        short_name: `GatsbyTSTW`,
+        name: `SheetySite`,
+        short_name: `SheetySite`,
         start_url: `/`,
         background_color: `#F7FAFC`,
         theme_color: `#2B6CB0`,
-        display: `standalone`,
+        display: `browser`,
         icon: `static/app-icon.png`, // This path is relative to the root of the site.
       },
     },
