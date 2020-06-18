@@ -31,7 +31,7 @@ const CompactItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
       handleOpenModal(e, item)
     } else if (!!item.actionUrl && window !== undefined) {
       gtagEventClick('click_item_action', item.actionUrl)
-      window.open('item.actionUrl', '_blank')
+      window.open(item.actionUrl, '_blank')
     }
   }
 

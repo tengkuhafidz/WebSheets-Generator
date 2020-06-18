@@ -32,7 +32,7 @@ const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) 
       handleOpenModal(e, item)
     } else if (!!item.actionUrl && window !== undefined) {
       gtagEventClick('click_item_action', item.actionUrl)
-      window.open('item.actionUrl', '_blank')
+      window.open(item.actionUrl, '_blank')
     }
   }
 

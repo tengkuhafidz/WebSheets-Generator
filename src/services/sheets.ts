@@ -1,5 +1,6 @@
 import { HeroType, ItemData, ListingType, SheetsData } from '../utils/models'
 import { fetchData } from '../utils/util'
+import { transformListingData, transformSiteData } from '../utils/transformers'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
 export const SITE_DATA_RANGE = 'site!A1:B21'
@@ -54,22 +55,9 @@ const transformArrayDataToObject = (rawNestedArrayData) => {
   return arrayOfObjects
 }
 
-const transformListingData = (rawListingData) => {
+const formatListingData = (rawListingData) => {
   const rawListingDataObjects = transformArrayDataToObject(rawListingData)
-
-  return rawListingDataObjects.map((rawItem, index) => {
-    const { title, subtitle, description, image, actionUrl, tags } = rawItem
-
-    return {
-      itemId: index + 1,
-      title,
-      subtitle,
-      description,
-      image,
-      actionUrl,
-      tags: typeof tags === 'string' && tags.split(', '),
-    }
-  })
+  return transformListingData(rawListingDataObjects)
 }
 
 const fetchRawListingData = async (sheetId) => {
@@ -77,53 +65,14 @@ const fetchRawListingData = async (sheetId) => {
   return await fetchData(listingSheetsApiUrl)
 }
 
-const fetchAndTransformListingData = async (sheetId) => {
+const fetchAndFormatListingData = async (sheetId) => {
   const rawListingData = await fetchRawListingData(sheetId)
-  return await transformListingData(rawListingData)
+  return await formatListingData(rawListingData)
 }
 
-const transformSiteData = (rawSiteData) => {
+const formatSiteData = (rawSiteData) => {
   const rawSiteDataObject = transformArrayDataToObject(rawSiteData)[0]
-
-  const {
-    siteName,
-    siteLogo,
-    sitePrimaryColor,
-    darkMode,
-    heroType,
-    heroTitle,
-    heroDescription,
-    heroButtonLabel,
-    heroButtonUrl,
-    socialShareButton,
-    listingType,
-    listingDescriptionButtonLabel,
-    listingUrlButtonLabel,
-    footerLabel,
-    facebookUrl,
-    instagramUrl,
-    twitterUrl,
-  } = rawSiteDataObject
-
-  return {
-    siteName: siteName || 'SheetySite',
-    siteLogo,
-    sitePrimaryColor: sitePrimaryColor || 'teal',
-    darkMode: darkMode === 'true',
-    heroType: heroType || HeroType.SIMPLE,
-    heroTitle: heroTitle || 'My List',
-    heroDescription: heroDescription || 'Check out this curated list',
-    heroButtonLabel: heroButtonLabel || 'Contact Me',
-    heroButtonUrl,
-    socialShareButton: socialShareButton !== null ? socialShareButton === 'show' : true,
-    listingType: listingType || ListingType.BASIC_3,
-    listingDescriptionButtonLabel: listingDescriptionButtonLabel || 'More Info',
-    listingUrlButtonLabel: listingUrlButtonLabel || 'View Details',
-    footerLabel,
-    facebookUrl,
-    instagramUrl,
-    twitterUrl,
-  }
+  return transformSiteData(rawSiteDataObject)
 }
 
 const fetchRawSiteData = async (sheetId) => {
@@ -131,9 +80,9 @@ const fetchRawSiteData = async (sheetId) => {
   return await fetchData(siteSheetsApiUrl)
 }
 
-const fetchAndTransformSiteData = async (sheetId) => {
+const fetchAndFormatSiteData = async (sheetId) => {
   const rawSiteData = await fetchRawSiteData(sheetId)
-  return transformSiteData(rawSiteData)
+  return formatSiteData(rawSiteData)
 }
 
 const validateListingData = (listingData: ItemData[]) => {
@@ -145,8 +94,8 @@ const validateListingData = (listingData: ItemData[]) => {
 }
 
 export const getSheetsData = async (sheetId): Promise<SheetsData> => {
-  const siteData = await fetchAndTransformSiteData(sheetId)
-  const listingData = await fetchAndTransformListingData(sheetId)
+  const siteData = await fetchAndFormatSiteData(sheetId)
+  const listingData = await fetchAndFormatListingData(sheetId)
 
   const isValidData = validateListingData(listingData)
 
