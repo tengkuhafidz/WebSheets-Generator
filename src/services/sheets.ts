@@ -1,6 +1,6 @@
-import { HeroType, ItemData, ListingType, SheetsData } from '../utils/models'
-import { fetchData } from '../utils/util'
+import { ItemData, SheetsData } from '../utils/models'
 import { transformListingData, transformSiteData } from '../utils/transformers'
+import { fetchData } from '../utils/util'
 
 export const API_KEY = process.env.GATSBY_SHEET_API_KEY
 export const SITE_DATA_RANGE = 'site!A1:B21'
@@ -41,7 +41,7 @@ const formatKey = (str) => {
 }
 
 const transformArrayDataToObject = (rawNestedArrayData) => {
-  const [rawObjectKeys, ...allObjectValues] = rawNestedArrayData.values
+  const [rawObjectKeys, ...allObjectValues] = rawNestedArrayData
   const objectKeys = rawObjectKeys.map((key) => formatKey(key))
 
   const arrayOfObjects = allObjectValues.map((singleObjectValues) => {
@@ -67,7 +67,10 @@ const fetchRawListingData = async (sheetId) => {
 
 const fetchAndFormatListingData = async (sheetId) => {
   const rawListingData = await fetchRawListingData(sheetId)
-  return await formatListingData(rawListingData)
+  if (!!rawListingData.values) {
+    return formatListingData(rawListingData.values)
+  }
+  return null
 }
 
 const formatSiteData = (rawSiteData) => {
@@ -82,10 +85,17 @@ const fetchRawSiteData = async (sheetId) => {
 
 const fetchAndFormatSiteData = async (sheetId) => {
   const rawSiteData = await fetchRawSiteData(sheetId)
-  return formatSiteData(rawSiteData)
+  if (!!rawSiteData.values) {
+    return formatSiteData(rawSiteData.values)
+  }
+  return null
 }
 
 const validateListingData = (listingData: ItemData[]) => {
+  if (!listingData) {
+    return false
+  }
+
   const listingItemWithoutTitle = listingData.find((item) => !item.title)
   if (listingItemWithoutTitle) {
     return false
