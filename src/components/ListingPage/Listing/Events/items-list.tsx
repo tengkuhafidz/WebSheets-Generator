@@ -13,8 +13,8 @@ const ItemsList: React.FC<Props> = ({ items, theme, siteData }) => {
     return items.map((item) => <SingleItem item={item} key={item.itemId} theme={theme} siteData={siteData} />)
   }
   const { listingCardSize } = siteData
-  const numOfCols = listingCardSize === ListingCardSize.SMALL ? `1` : `2`
-  const gap = listingCardSize === ListingCardSize.SMALL ? `` : `gap-8`
+  const numOfCols = listingCardSize === ListingCardSize.SMALL ? `2` : `1`
+  const gap = listingCardSize === ListingCardSize.SMALL ? `gap-8` : ``
 
   return <div className={`grid md:grid-cols-${numOfCols} ${gap}`}>{renderItems()}</div>
 }
