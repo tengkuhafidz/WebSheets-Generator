@@ -1,6 +1,6 @@
 import Fuse from 'fuse.js'
 import React, { useState } from 'react'
-import { ItemData, ListingType, SiteData, Theme } from '../../../utils/models'
+import { ItemData, ListingCardType, SiteData, Theme } from '../../../utils/models'
 import Events from './Events'
 import ListingItems from './listing-items'
 import { gtagEventClick } from '../../../utils/gtag'
@@ -92,10 +92,10 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   }
 
   const renderListing = () => {
-    const { listingType } = siteData
+    const { listingCardType } = siteData
 
-    switch (listingType) {
-      case ListingType.EVENTS:
+    switch (listingCardType) {
+      case ListingCardType.EVENTS:
         return <Events theme={theme} items={itemsToDisplay} siteData={siteData} />
       default:
         return <ListingItems theme={theme} items={itemsToDisplay} siteData={siteData} />

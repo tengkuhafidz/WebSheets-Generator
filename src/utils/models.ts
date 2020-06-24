@@ -19,7 +19,7 @@ export interface SiteData {
   heroButtonLabel: string
   heroButtonUrl: string
   socialShareButton: boolean
-  listingType: ListingType
+  listingCardType: listingCardType
   listingDescriptionButtonLabel: string
   listingUrlButtonLabel: string
   footerLabel: string
@@ -45,7 +45,7 @@ export interface Theme {
   customShadow: string
 }
 
-export enum ListingType {
+export enum ListingCardType {
   EVENTS = 'events',
   BASIC_3 = 'basic-3',
   BASIC_4 = 'basic-4',
