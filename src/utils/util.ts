@@ -1,4 +1,5 @@
-import { ListingCardSize } from './models'
+import { ListingCardSize, ItemData } from './models'
+import { gtagEventClick } from './gtag'
 
 export const fetchData = async (url: string) => {
   const data = await fetch(url)
@@ -15,5 +16,15 @@ export const getHeightBasedOnCardSize = (listingCardSize: ListingCardSize): numb
       return 64
     default:
       return 48
+  }
+}
+
+export const handleItemClick = (e, item: ItemData, handleOpenModal) => {
+  if (!!item.description) {
+    gtagEventClick('open_item_modal', item.title)
+    handleOpenModal(e, item)
+  } else if (!!item.actionUrl && window !== undefined) {
+    gtagEventClick('click_item_action', item.actionUrl)
+    window.open(item.actionUrl, '_blank')
   }
 }

@@ -29,8 +29,6 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
     }
   }
 
-  const numOfCols = getNumOfCols(listingCardSize)
-
   const renderBasicItems = () => {
     return items.map((item) => (
       <BasicItem item={item} key={item.itemId} theme={theme} siteData={siteData} handleOpenModal={handleOpenModal} />
@@ -50,7 +48,7 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
   }
 
   const renderProfileItems = () => {
-    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} siteData={siteData} />)
+    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} />)
   }
 
   const renderModernItems = () => {
@@ -75,6 +73,9 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
         return renderBasicItems()
     }
   }
+
+  const numOfCols =
+    listingCardType === ListingCardType.PROFILES ? getNumOfCols(listingCardSize) - 2 : getNumOfCols(listingCardSize)
 
   return <div className={`grid grid-cols-1 md:grid-cols-${numOfCols} gap-8`}>{renderItems()}</div>
 }

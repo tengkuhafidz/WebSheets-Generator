@@ -1,7 +1,6 @@
 import React from 'react'
-import { gtagEventClick } from '../../../../utils/gtag'
-import { ItemData, SiteData, Theme, ListingCardSize } from '../../../../utils/models'
-import { getHeightBasedOnCardSize } from '../../../../utils/util'
+import { ItemData, ListingCardSize, SiteData, Theme } from '../../../../utils/models'
+import { getHeightBasedOnCardSize, handleItemClick } from '../../../../utils/util'
 
 interface Props {
   item: ItemData
@@ -38,22 +37,12 @@ const CompactItem: React.FC<Props> = ({ item, theme, siteData, handleOpenModal }
     return <></>
   }
 
-  const handleItemClick = (e, item: ItemData) => {
-    if (!!item.description) {
-      gtagEventClick('open_item_modal', item.title)
-      handleOpenModal(e, item)
-    } else if (!!item.actionUrl && window !== undefined) {
-      gtagEventClick('click_item_action', item.actionUrl)
-      window.open(item.actionUrl, '_blank')
-    }
-  }
-
   return (
     <div
       className={`max-w-sm rounded-lg shadow-lg mb-8 ${altBackground}  ${
         (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
-      onClick={(e) => handleItemClick(e, item)}
+      onClick={(e) => handleItemClick(e, item, handleOpenModal)}
     >
       {renderImage()}
       <div className="px-6 py-4">

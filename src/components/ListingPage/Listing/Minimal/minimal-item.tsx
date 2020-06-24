@@ -1,7 +1,7 @@
 import React from 'react'
 import { ItemData, Theme, SiteData, ListingCardSize } from '../../../../utils/models'
 import { gtagEventClick } from '../../../../utils/gtag'
-import { getHeightBasedOnCardSize } from '../../../../utils/util'
+import { getHeightBasedOnCardSize, handleItemClick } from '../../../../utils/util'
 
 interface Props {
   item: ItemData
@@ -18,16 +18,6 @@ const MinimalItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }
       ? getHeightBasedOnCardSize(listingCardSize) - 8
       : getHeightBasedOnCardSize(listingCardSize) - 16
 
-  const handleItemClick = (e, item: ItemData) => {
-    if (!!item.description) {
-      gtagEventClick('open_item_modal', item.title)
-      handleOpenModal(e, item)
-    } else if (!!item.actionUrl && window !== undefined) {
-      gtagEventClick('click_item_action', item.actionUrl)
-      window.open(item.actionUrl, '_blank')
-    }
-  }
-
   const renderImage = () => {
     if (!!item.image) {
       return (
@@ -37,7 +27,7 @@ const MinimalItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }
           }`}
           src={item.image}
           alt={`Image of ${item.title}`}
-          onClick={(e) => handleItemClick(e, item)}
+          onClick={(e) => handleItemClick(e, item, handleOpenModal)}
         />
       )
     }
@@ -60,7 +50,7 @@ const MinimalItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }
             className={`font-bold text-${primary} truncate text-xl ${
               (!!item.description || !!item.actionUrl) && `cursor-pointer`
             }`}
-            onClick={(e) => handleItemClick(e, item)}
+            onClick={(e) => handleItemClick(e, item, handleOpenModal)}
           >
             {item.title}
           </p>
