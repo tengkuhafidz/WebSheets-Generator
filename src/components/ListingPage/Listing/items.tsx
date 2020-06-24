@@ -4,6 +4,7 @@ import { ItemData, Theme, SiteData, ListingCardType, ListingCardSize } from '../
 import ProfileItem from './Profiles/profiles-item'
 import BasicItem from './Basic/basic-item'
 import CompactItem from './Compact/compact-item'
+import MinimalItem from './Minimal/minimal-item'
 
 interface Props {
   items: ItemData[]
@@ -32,7 +33,7 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
 
   const renderBasicItems = () => {
     return items.map((item) => (
-      <BasicItem item={item} key={item.itemId} theme={theme}  siteData={siteData} handleOpenModal={handleOpenModal} />
+      <BasicItem item={item} key={item.itemId} theme={theme} siteData={siteData} handleOpenModal={handleOpenModal} />
     ))
   }
 
@@ -42,13 +43,19 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
     ))
   }
 
+  const renderMinimalItems = () => {
+    return items.map((item) => (
+      <MinimalItem item={item} key={item.itemId} theme={theme} siteData={siteData} handleOpenModal={handleOpenModal} />
+    ))
+  }
+
   const renderProfileItems = () => {
-    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme}  siteData={siteData} />)
+    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} siteData={siteData} />)
   }
 
   const renderModernItems = () => {
     return items.map((item) => (
-      <ModernItem item={item} key={item.itemId} theme={theme}  siteData={siteData} handleOpenModal={handleOpenModal} />
+      <ModernItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
     ))
   }
 
@@ -58,6 +65,8 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
         return renderBasicItems()
       case ListingCardType.COMPACT:
         return renderCompactItems()
+      case ListingCardType.MINIMAL:
+        return renderMinimalItems()
       case ListingCardType.PROFILES:
         return renderProfileItems()
       case ListingCardType.MODERN:

@@ -49,6 +49,7 @@ export interface Theme {
 export enum ListingCardType {
   BASIC = 'basic',
   COMPACT = 'compact',
+  MINIMAL = 'minimal',
   PROFILES = 'profiles',
   MODERN = 'modern',
   EVENTS = 'events',

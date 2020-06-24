@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ModernItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
-  const { customShadow, text } = theme
+  const { customShadow } = theme
   const image = !!item.image ? item.image : ''
 
   const renderSubtitle = () => {
