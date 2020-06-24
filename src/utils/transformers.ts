@@ -1,4 +1,4 @@
-import { HeroType, ListingCardType, SiteData } from '../utils/models'
+import { HeroType, ListingCardType, SiteData, ListingCardSize } from '../utils/models'
 
 export const transformSiteData = (rawSiteData): SiteData => {
   const {
@@ -13,6 +13,7 @@ export const transformSiteData = (rawSiteData): SiteData => {
     heroButtonUrl,
     socialShareButton,
     listingCardType,
+    listingCardSize,
     listingDescriptionButtonLabel,
     listingUrlButtonLabel,
     footerLabel,
@@ -32,7 +33,8 @@ export const transformSiteData = (rawSiteData): SiteData => {
     heroButtonLabel: heroButtonLabel || 'Contact Me',
     heroButtonUrl,
     socialShareButton: socialShareButton !== null ? socialShareButton === 'show' : true,
-    listingCardType: listingCardType || ListingCardType.BASIC_3,
+    listingCardType: listingCardType || ListingCardType.BASIC,
+    listingCardSize: listingCardSize || ListingCardSize.MEDIUM,
     listingDescriptionButtonLabel: listingDescriptionButtonLabel || 'More Info',
     listingUrlButtonLabel: listingUrlButtonLabel || 'View Details',
     footerLabel,

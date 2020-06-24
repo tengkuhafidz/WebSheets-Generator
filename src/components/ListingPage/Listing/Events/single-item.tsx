@@ -1,5 +1,5 @@
 import React from 'react'
-import { ItemData, Theme, SiteData } from '../../../../utils/models'
+import { ItemData, Theme, SiteData, ListingCardSize } from '../../../../utils/models'
 import { OutboundLink } from 'gatsby-plugin-google-gtag'
 import { gtagEventClick } from '../../../../utils/gtag'
 
@@ -12,11 +12,27 @@ interface Props {
 const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const { primary, customShadow } = theme
 
+  const getImageHeight = () => {
+    const { listingCardSize } = siteData
+    switch (listingCardSize) {
+      case ListingCardSize.SMALL:
+        return 32
+      case ListingCardSize.MEDIUM:
+        return 48
+      case ListingCardSize.LARGE:
+        return 64
+      default:
+        return 'full'
+    }
+  }
+
+  const imageHeight = getImageHeight()
+
   const renderImage = () => {
     if (!!item.image) {
       return (
         <img
-          className="w-full md:max-h-full bg-gray-900 rounded-lg object-cover md:col-span-2"
+          className={`w-full md:h-${imageHeight} bg-gray-900 rounded-lg object-cover md:col-span-2`}
           src={item.image}
           alt={`Image of ${item.title}`}
         />
@@ -43,7 +59,7 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
     if (!!item.actionUrl) {
       return (
         <OutboundLink
-          className={`py-2 px-16 rounded bg-${primary} hidden text-white text-center ${
+          className={`py-2 px-16 rounded bg-${primary} text-white text-center ${
             !!item.actionUrl && `hover:${customShadow} cursor-pointer block md:inline`
           }`}
           href={item.actionUrl}
@@ -61,7 +77,7 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   return (
     <div className={`rounded-lg shadow-lg bg-white mb-8 p-8 grid md:grid-cols-5 gap-3`}>
       {renderImage()}
-      <div className="px-6 md:col-span-3">
+      <div className="md:px-6 md:col-span-3">
         <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
         {renderDescription()}
