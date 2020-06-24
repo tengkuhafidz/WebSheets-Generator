@@ -1,6 +1,7 @@
 import React from 'react'
 import { ItemData, Theme, SiteData } from '../../../../utils/models'
 import { gtagEventClick } from '../../../../utils/gtag'
+import { getHeightBasedOnCardSize } from '../../../../utils/util'
 
 interface Props {
   item: ItemData
@@ -10,18 +11,25 @@ interface Props {
 }
 
 const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) => {
-  const { primary, customShadow } = theme
+  const { primary, customShadow, text, subtext, altBackground } = theme
+  const imageHeight = getHeightBasedOnCardSize(siteData.listingCardSize)
 
   const renderImage = () => {
     if (!!item.image) {
-      return <img className="w-full rounded-t-lg h-48 object-cover" src={item.image} alt={`Image of ${item.title}`} />
+      return (
+        <img
+          className={`w-full rounded-t-lg h-${imageHeight} object-cover`}
+          src={item.image}
+          alt={`Image of ${item.title}`}
+        />
+      )
     }
     return <></>
   }
 
   const renderSubtitle = () => {
     if (!!item.subtitle) {
-      return <p className={`text-gray-600 font-light truncate`}>{item.subtitle}</p>
+      return <p className={`${subtext} font-light truncate`}>{item.subtitle}</p>
     }
     return <></>
   }
@@ -54,10 +62,10 @@ const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) 
   }
 
   return (
-    <div className={`rounded-lg shadow-lg text-center bg-white mb-8`}>
+    <div className={`rounded-lg shadow-lg text-center ${altBackground} mb-8`}>
       {renderImage()}
       <div className="px-6 py-4">
-        <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
+        <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
         {renderButton()}
       </div>

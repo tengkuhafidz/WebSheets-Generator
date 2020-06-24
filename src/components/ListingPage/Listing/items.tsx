@@ -32,23 +32,23 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
 
   const renderBasicItems = () => {
     return items.map((item) => (
-      <BasicItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} siteData={siteData} />
+      <BasicItem item={item} key={item.itemId} theme={theme}  siteData={siteData} handleOpenModal={handleOpenModal} />
     ))
   }
 
   const renderCompactItems = () => {
     return items.map((item) => (
-      <CompactItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
+      <CompactItem item={item} key={item.itemId} theme={theme} siteData={siteData} handleOpenModal={handleOpenModal} />
     ))
   }
 
   const renderProfileItems = () => {
-    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} />)
+    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme}  siteData={siteData} />)
   }
 
   const renderModernItems = () => {
     return items.map((item) => (
-      <ModernItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
+      <ModernItem item={item} key={item.itemId} theme={theme}  siteData={siteData} handleOpenModal={handleOpenModal} />
     ))
   }
 

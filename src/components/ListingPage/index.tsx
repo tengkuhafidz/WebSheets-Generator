@@ -81,7 +81,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
     altText: 'text-white',
     altSubtext: 'text-gray-400',
     background: 'bg-gray-100',
-    altBackground: 'bg-gray-400',
+    altBackground: 'bg-white',
     customShadow: 'shadow-xl',
   }
 
@@ -91,7 +91,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
     text: 'text-white',
     subtext: 'text-gray-400',
     altText: 'text-gray-800',
-    altSubtext: 'text-gray-600',
+    altSubtext: 'text-gray-700',
     background: 'bg-gray-900',
     altBackground: 'bg-gray-600',
     customShadow: 'shadow-white',

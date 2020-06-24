@@ -1,7 +1,7 @@
-import React from 'react'
-import { ItemData, Theme, SiteData, ListingCardSize } from '../../../../utils/models'
 import { OutboundLink } from 'gatsby-plugin-google-gtag'
+import React from 'react'
 import { gtagEventClick } from '../../../../utils/gtag'
+import { ItemData, SiteData, Theme } from '../../../../utils/models'
 
 interface Props {
   item: ItemData
@@ -10,29 +10,13 @@ interface Props {
 }
 
 const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
-  const { primary, customShadow } = theme
-
-  const getImageHeight = () => {
-    const { listingCardSize } = siteData
-    switch (listingCardSize) {
-      case ListingCardSize.SMALL:
-        return 32
-      case ListingCardSize.MEDIUM:
-        return 48
-      case ListingCardSize.LARGE:
-        return 64
-      default:
-        return 'full'
-    }
-  }
-
-  const imageHeight = getImageHeight()
+  const { primary, customShadow, altBackground, text, subtext } = theme
 
   const renderImage = () => {
     if (!!item.image) {
       return (
         <img
-          className={`w-full md:h-${imageHeight} bg-gray-900 rounded-lg object-cover md:col-span-2`}
+          className={`w-full md:h-${'full'} bg-gray-900 rounded-lg object-cover md:col-span-2`}
           src={item.image}
           alt={`Image of ${item.title}`}
         />
@@ -42,15 +26,16 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   }
 
   const renderSubtitle = () => {
+    const marginBottom = !!item.description ? 'mb-4' : 'mb-16'
     if (!!item.subtitle) {
-      return <p className={`text-gray-600 font-light truncate`}>{item.subtitle}</p>
+      return <p className={`${subtext} font-light truncate ${marginBottom}`}>{item.subtitle}</p>
     }
-    return <></>
+    return <div className={marginBottom}></div>
   }
 
   const renderDescription = () => {
-    if (!!item.subtitle) {
-      return <p className={`text-gray-600 font-light mt-4 mb-8`}>{item.description}</p>
+    if (!!item.description) {
+      return <p className={`${text} font-light mb-16`}>{item.description}</p>
     }
     return <></>
   }
@@ -75,10 +60,10 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   }
 
   return (
-    <div className={`rounded-lg shadow-lg bg-white mb-8 p-8 grid md:grid-cols-5 gap-3`}>
+    <div className={`rounded-lg shadow-lg ${altBackground} mb-8 p-8 grid md:grid-cols-5 gap-3 `}>
       {renderImage()}
       <div className="md:px-6 md:col-span-3">
-        <div className={`font-bold text-gray-800 text-xl truncate`}>{item.title}</div>
+        <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
         {renderDescription()}
         {renderActionButton()}
