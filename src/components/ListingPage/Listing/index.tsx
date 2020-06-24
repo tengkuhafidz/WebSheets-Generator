@@ -60,7 +60,7 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
 
   const itemsToDisplay = getItemsToDisplay()
 
-  const { text, altBackground } = theme
+  const { text, altBackground, primary } = theme
 
   const handleTabClick = (tab: string) => {
     gtagEventClick('click_filter_tab', tab)
@@ -79,7 +79,7 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
         <li className="mr-3" key={tag}>
           <a
             className={`inline-block rounded py-1 px-3 cursor-pointer ${
-              tag === currentTab ? `${altBackground} ${text}` : `${text}`
+              tag === currentTab ? `border border-${primary} ${altBackground} ${text}` : `${text}`
             }`}
             onClick={() => handleTabClick(tag)}
           >
