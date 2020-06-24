@@ -5,6 +5,7 @@ import ProfileItem from './Profiles/profiles-item'
 import BasicItem from './Basic/basic-item'
 import CompactItem from './Compact/compact-item'
 import MinimalItem from './Minimal/minimal-item'
+import PillItem from './Pill/pill-item'
 
 interface Props {
   items: ItemData[]
@@ -47,6 +48,12 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
     ))
   }
 
+  const renderPillItems = () => {
+    return items.map((item) => (
+      <PillItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
+    ))
+  }
+
   const renderProfileItems = () => {
     return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} />)
   }
@@ -65,6 +72,8 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
         return renderCompactItems()
       case ListingCardType.MINIMAL:
         return renderMinimalItems()
+      case ListingCardType.PILL:
+        return renderPillItems()
       case ListingCardType.PROFILES:
         return renderProfileItems()
       case ListingCardType.MODERN:
@@ -75,7 +84,7 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
   }
 
   const numOfCols =
-    listingCardType === ListingCardType.PROFILES ? getNumOfCols(listingCardSize) - 2 : getNumOfCols(listingCardSize)
+    listingCardType === ListingCardType.PILL ? getNumOfCols(listingCardSize) - 1 : getNumOfCols(listingCardSize)
 
   return <div className={`grid grid-cols-1 md:grid-cols-${numOfCols} gap-8`}>{renderItems()}</div>
 }

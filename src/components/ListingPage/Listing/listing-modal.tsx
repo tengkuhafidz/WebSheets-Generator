@@ -35,12 +35,19 @@ const ListingModal: React.FC<Props> = ({ theme, Modal, currentModalItem, isOpen,
     return <></>
   }
 
+  const renderImage = () => {
+    if (!!currentModalItem.image) {
+      return <img src={currentModalItem.image} className="h-64 mx-auto rounded-lg" />
+    }
+    return <></>
+  }
+
   return (
     <Modal>
       <div
         className={`${altBackground} shadow-xl ${text} min-h-64 b-8 p-8 rounded-lg text-center w-screen md:max-w-screen-md`}
       >
-        <img src={currentModalItem.image} className="h-64 mx-auto rounded-lg" />
+        {renderImage()}
         <h2 className="text-2xl mt-2">{currentModalItem.title}</h2>
         <p className={`${subtext} -mt-1`}>{currentModalItem.subtitle}</p>
         <p className="mb-8 mt-4">{currentModalItem.description}</p>

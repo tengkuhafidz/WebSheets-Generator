@@ -16,7 +16,7 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
     if (!!item.image) {
       return (
         <img
-          className={`w-full md:h-${'full'} bg-gray-900 rounded-lg object-cover md:col-span-2`}
+          className={`w-full md:h-full bg-gray-900 rounded-lg object-cover md:col-span-2`}
           src={item.image}
           alt={`Image of ${item.title}`}
         />

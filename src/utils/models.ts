@@ -52,6 +52,7 @@ export enum ListingCardType {
   MINIMAL = 'minimal',
   PROFILES = 'profiles',
   MODERN = 'modern',
+  PILL = 'pill',
   EVENTS = 'events',
 }
 
