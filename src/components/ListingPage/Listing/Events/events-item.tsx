@@ -9,7 +9,7 @@ interface Props {
   siteData: SiteData
 }
 
-const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
+const EventsItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const { primary, customShadow, altBackground, text, subtext } = theme
 
   const renderImage = () => {
@@ -28,7 +28,7 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const renderSubtitle = () => {
     const marginBottom = !!item.description ? 'mb-4' : 'mb-16'
     if (!!item.subtitle) {
-      return <p className={`${subtext} font-light truncate ${marginBottom}`}>{item.subtitle}</p>
+      return <p className={`${subtext} font-light ${marginBottom}`}>{item.subtitle}</p>
     }
     return <div className={marginBottom}></div>
   }
@@ -62,10 +62,10 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const contentColSpan = !!item.image ? `md:col-span-3` : `md:col-span-5`
 
   return (
-    <div className={`rounded-lg shadow-lg ${altBackground} mb-8 p-8 grid md:grid-cols-5 gap-3 `}>
+    <div className={`rounded-lg shadow-lg ${altBackground} mb-8 p-8 grid md:grid-cols-5 gap-3`}>
       {renderImage()}
       <div className={`md:px-6 ${contentColSpan} md:relative`}>
-        <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
+        <div className={`font-bold ${text} text-xl`}>{item.title}</div>
         {renderSubtitle()}
         {renderDescription()}
         {renderActionButton()}
@@ -74,4 +74,4 @@ const SingleItem: React.FC<Props> = ({ item, theme, siteData }) => {
   )
 }
 
-export default SingleItem
+export default EventsItem

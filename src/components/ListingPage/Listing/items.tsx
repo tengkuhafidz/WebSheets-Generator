@@ -6,6 +6,7 @@ import BasicItem from './Basic/basic-item'
 import CompactItem from './Compact/compact-item'
 import MinimalItem from './Minimal/minimal-item'
 import PillItem from './Pill/pill-item'
+import EventsItem from './Events/events-item'
 
 interface Props {
   items: ItemData[]
@@ -17,16 +18,29 @@ interface Props {
 const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => {
   const { listingCardType, listingCardSize } = siteData
 
-  const getNumOfCols = (listingCardSize) => {
+  const getNumOfColsByCardType = (listingCardType): { small: number; medium: number; large: number } => {
+    switch (listingCardType) {
+      case ListingCardType.PILL:
+        return { small: 4, medium: 3, large: 2 }
+      case ListingCardType.PROFILES:
+        return { small: 4, medium: 3, large: 2 }
+      case ListingCardType.EVENTS:
+        return { small: 3, medium: 2, large: 1 }
+      default:
+        return { small: 5, medium: 4, large: 3 }
+    }
+  }
+
+  const getNumOfCols = (listingCardSize): number => {
     switch (listingCardSize) {
       case ListingCardSize.SMALL:
-        return listingCardType === ListingCardType.PILL ? 4 : 5
+        return getNumOfColsByCardType(listingCardType).small
       case ListingCardSize.MEDIUM:
-        return listingCardType === ListingCardType.PILL ? 3 : 4
+        return getNumOfColsByCardType(listingCardType).medium
       case ListingCardSize.LARGE:
-        return listingCardType === ListingCardType.PILL ? 2 : 3
+        return getNumOfColsByCardType(listingCardType).large
       default:
-        return listingCardType === ListingCardType.PILL ? 3 : 4
+        return getNumOfColsByCardType(listingCardType).medium
     }
   }
 
@@ -48,20 +62,24 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
     ))
   }
 
+  const renderModernItems = () => {
+    return items.map((item) => (
+      <ModernItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
+    ))
+  }
+
   const renderPillItems = () => {
     return items.map((item) => (
       <PillItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
     ))
   }
 
-  const renderProfileItems = () => {
-    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} />)
+  const renderEventItems = () => {
+    return items.map((item) => <EventsItem item={item} key={item.itemId} theme={theme} siteData={siteData} />)
   }
 
-  const renderModernItems = () => {
-    return items.map((item) => (
-      <ModernItem item={item} key={item.itemId} theme={theme} handleOpenModal={handleOpenModal} />
-    ))
+  const renderProfileItems = () => {
+    return items.map((item) => <ProfileItem item={item} key={item.itemId} theme={theme} />)
   }
 
   const renderItems = () => {
@@ -72,12 +90,14 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
         return renderCompactItems()
       case ListingCardType.MINIMAL:
         return renderMinimalItems()
-      case ListingCardType.PILL:
-        return renderPillItems()
-      case ListingCardType.PROFILES:
-        return renderProfileItems()
       case ListingCardType.MODERN:
         return renderModernItems()
+      case ListingCardType.PILL:
+        return renderPillItems()
+      case ListingCardType.EVENTS:
+        return renderEventItems()
+      case ListingCardType.PROFILES:
+        return renderProfileItems()
       default:
         return renderBasicItems()
     }
