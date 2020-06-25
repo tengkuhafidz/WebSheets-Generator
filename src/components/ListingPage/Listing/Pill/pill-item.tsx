@@ -15,7 +15,7 @@ const PillItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
     if (!!item.image) {
       return (
         <img
-          className={`w-full h-full bg-gray-900 rounded-full object-cover md:col-span-2`}
+          className={`w-full h-full bg-gray-900 rounded-full object-cover col-span-2`}
           src={item.image}
           alt={`Image of ${item.title}`}
         />
@@ -33,13 +33,13 @@ const PillItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
 
   return (
     <div
-      className={`rounded-full shadow-lg ${altBackground} mb-8 p-2 grid md:grid-cols-5 gap-3 ${
+      className={`rounded-full shadow-lg ${altBackground} mb-8 p-2 grid grid-cols-5 gap-3 ${
         (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
       onClick={(e) => handleItemClick(e, item, handleOpenModal)}
     >
       {renderImage()}
-      <div className={`md:py-4 md:col-span-3 md:relative ${!item.image && 'ml-12'}`}>
+      <div className={`md:py-4 col-span-3 md:relative ${!item.image && 'ml-8 md:ml-12'}`}>
         <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>
         {renderSubtitle()}
       </div>

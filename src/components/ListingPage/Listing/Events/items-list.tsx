@@ -13,8 +13,22 @@ const ItemsList: React.FC<Props> = ({ items, theme, siteData }) => {
     return items.map((item) => <SingleItem item={item} key={item.itemId} theme={theme} siteData={siteData} />)
   }
   const { listingCardSize } = siteData
-  const numOfCols = listingCardSize === ListingCardSize.SMALL ? `2` : `1`
-  const gap = listingCardSize === ListingCardSize.SMALL ? `gap-8` : ``
+
+  const getNumOfCols = (listingCardSize) => {
+    switch (listingCardSize) {
+      case ListingCardSize.SMALL:
+        return 3
+      case ListingCardSize.MEDIUM:
+        return 2
+      case ListingCardSize.LARGE:
+        return 1
+      default:
+        return 2
+    }
+  }
+
+  const numOfCols = getNumOfCols(listingCardSize)
+  const gap = listingCardSize === ListingCardSize.LARGE ? `` : `md:gap-8`
 
   return <div className={`grid md:grid-cols-${numOfCols} ${gap}`}>{renderItems()}</div>
 }
