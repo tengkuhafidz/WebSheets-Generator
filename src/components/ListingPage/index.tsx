@@ -61,17 +61,19 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
   }
 
   const { sitePrimaryColor, heroTitle, heroDescription } = siteData as SiteData
-  let primaryColor = `${sitePrimaryColor}-500`
-  switch (sitePrimaryColor) {
-    case 'pink':
-      primaryColor = `${sitePrimaryColor}-400`
-      break
-    case 'red':
-      primaryColor = `${sitePrimaryColor}-600`
-      break
-    default:
-      primaryColor = `${sitePrimaryColor}-500`
+
+  const getPrimaryColor = () => {
+    switch (sitePrimaryColor) {
+      case 'pink':
+        return `${sitePrimaryColor}-400`
+      case 'red':
+        return `${sitePrimaryColor}-600`
+      default:
+        return `${sitePrimaryColor}-500`
+    }
   }
+
+  const primaryColor = getPrimaryColor()
 
   const lightTheme = {
     primary: primaryColor,
