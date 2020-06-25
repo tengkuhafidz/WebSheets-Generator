@@ -1,6 +1,5 @@
 import React from 'react'
-import { ItemData, Theme, SiteData, ListingCardSize } from '../../../../utils/models'
-import { gtagEventClick } from '../../../../utils/gtag'
+import { ItemData, ListingCardSize, SiteData, Theme } from '../../../../utils/models'
 import { getHeightBasedOnCardSize, handleItemClick } from '../../../../utils/util'
 
 interface Props {

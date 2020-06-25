@@ -50,7 +50,7 @@ const ProfilesItem: React.FC<Props> = ({ item, theme }) => {
       className={`rounded-lg shadow-lg ${altBackground} grid md:grid-cols-5 h-full ${
         !!item.actionUrl && `hover:${customShadow} cursor-pointer`
       }`}
-      onClick={(e) => handleActionClick(item)}
+      onClick={() => handleActionClick(item)}
     >
       {renderImage()}
       <div className={`p-6 ${contentColSpan}`}>
