@@ -14,7 +14,7 @@ const ProfilesItem: React.FC<Props> = ({ item, theme }) => {
     if (!!item.image) {
       return (
         <img
-          className={`w-full h-full bg-gray-900 md:rounded-l-lg object-cover col-span-2`}
+          className={`w-full md:h-full bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg object-cover col-span-2`}
           src={item.image}
           alt={`Image of ${item.title}`}
         />
@@ -47,13 +47,13 @@ const ProfilesItem: React.FC<Props> = ({ item, theme }) => {
 
   return (
     <div
-      className={`rounded-lg shadow-lg ${altBackground} mb-4 grid md:grid-cols-5 h-full ${
+      className={`rounded-lg shadow-lg ${altBackground} grid md:grid-cols-5 h-full ${
         !!item.actionUrl && `hover:${customShadow} cursor-pointer`
       }`}
       onClick={(e) => handleActionClick(item)}
     >
       {renderImage()}
-      <div className={`md:p-6 ${contentColSpan} md:relative`}>
+      <div className={`p-6 ${contentColSpan}`}>
         <div className={`font-bold ${text} text-xl`}>{item.title}</div>
         {renderSubtitle()}
         {renderDescription()}

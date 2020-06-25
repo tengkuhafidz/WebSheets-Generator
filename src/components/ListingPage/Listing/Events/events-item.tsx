@@ -62,7 +62,7 @@ const EventsItem: React.FC<Props> = ({ item, theme, siteData }) => {
   const contentColSpan = !!item.image ? `md:col-span-3` : `md:col-span-5`
 
   return (
-    <div className={`rounded-lg shadow-lg ${altBackground} mb-8 p-8 grid md:grid-cols-5 gap-3`}>
+    <div className={`rounded-lg shadow-lg ${altBackground} p-8 grid md:grid-cols-5 gap-3`}>
       {renderImage()}
       <div className={`md:px-6 ${contentColSpan} md:relative`}>
         <div className={`font-bold ${text} text-xl`}>{item.title}</div>

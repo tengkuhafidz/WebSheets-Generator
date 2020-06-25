@@ -39,7 +39,7 @@ const CompactItem: React.FC<Props> = ({ item, theme, siteData, handleOpenModal }
 
   return (
     <div
-      className={`max-w-sm rounded-lg shadow-lg mb-8 ${altBackground}  ${
+      className={`max-w-sm rounded-lg shadow-lg mb-4 ${altBackground}  ${
         (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
       onClick={(e) => handleItemClick(e, item, handleOpenModal)}

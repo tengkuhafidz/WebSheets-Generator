@@ -52,7 +52,7 @@ const BasicItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }) 
   }
 
   return (
-    <div className={`rounded-lg shadow-lg text-center ${altBackground} mb-8`}>
+    <div className={`rounded-lg shadow-lg text-center ${altBackground} mb-4`}>
       {renderImage()}
       <div className="px-6 py-4">
         <div className={`font-bold ${text} text-xl truncate`}>{item.title}</div>

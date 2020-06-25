@@ -105,7 +105,7 @@ const Items: React.FC<Props> = ({ items, theme, handleOpenModal, siteData }) => 
 
   const numOfCols = getNumOfCols(listingCardSize)
 
-  return <div className={`grid grid-cols-1 md:grid-cols-${numOfCols} md:gap-8`}>{renderItems()}</div>
+  return <div className={`grid grid-cols-1 md:grid-cols-${numOfCols} gap-8`}>{renderItems()}</div>
 }
 
 export default Items

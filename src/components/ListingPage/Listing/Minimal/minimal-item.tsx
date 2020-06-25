@@ -42,7 +42,7 @@ const MinimalItem: React.FC<Props> = ({ item, theme, handleOpenModal, siteData }
   }
 
   return (
-    <div className={`rounded-lg mb-8`}>
+    <div className={`rounded-lg`}>
       {renderImage()}
       <div className="px-1 py-2">
         <div>

@@ -21,7 +21,7 @@ const ModernItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
 
   return (
     <div
-      className={`max-w-sm bg-cover bg-center rounded-lg shadow-lg mb-8 text-center py-8 font-bold bg-gray-600 ${
+      className={`max-w-sm bg-cover bg-center rounded-lg shadow-lg mb-4 text-center py-8 font-bold bg-gray-600 ${
         (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
       style={{ backgroundImage: `url(${image})`, textShadow: `1px 1px #333333` }}

@@ -33,7 +33,7 @@ const PillItem: React.FC<Props> = ({ item, theme, handleOpenModal }) => {
 
   return (
     <div
-      className={`rounded-full shadow-lg ${altBackground} mb-8 md:mb-0 p-2 grid grid-cols-5 gap-3 ${
+      className={`rounded-full shadow-lg ${altBackground} p-2 grid grid-cols-5 gap-3 ${
         (!!item.description || !!item.actionUrl) && `hover:${customShadow} cursor-pointer`
       }`}
       onClick={(e) => handleItemClick(e, item, handleOpenModal)}
