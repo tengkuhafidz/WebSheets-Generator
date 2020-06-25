@@ -62,22 +62,69 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
 
   const { sitePrimaryColor, heroTitle, heroDescription } = siteData as SiteData
 
-  const getPrimaryColor = () => {
-    switch (sitePrimaryColor) {
-      case 'pink':
-        return `${sitePrimaryColor}-400`
-      case 'red':
-        return `${sitePrimaryColor}-600`
+  const getMatchedColor = (color) => {
+    switch (color) {
+      case 'peach':
+        return 'red'
+      case 'brown':
+        return 'yellow'
       default:
-        return `${sitePrimaryColor}-500`
+        return color
     }
+  }
+
+  const getMatchedColorTone = (tone, colorTones) => {
+    switch (tone) {
+      case 'light':
+        return colorTones.light
+      case 'dark':
+        return colorTones.dark
+      default:
+        return colorTones.base
+    }
+  }
+
+  const getColorTones = (color: string): { light: number; base: number; dark: number } => {
+    switch (color) {
+      case 'teal':
+        return { light: 500, base: 600, dark: 700 }
+      case 'pink':
+        return { light: 300, base: 400, dark: 600 }
+      case 'blue':
+        return { light: 400, base: 600, dark: 800 }
+      case 'green':
+        return { light: 400, base: 600, dark: 800 }
+      case 'purple':
+        return { light: 400, base: 600, dark: 800 }
+      case 'peach':
+        return { light: 300, base: 400, dark: 500 }
+      case 'gray':
+        return { light: 500, base: 700, dark: 800 }
+      case 'indigo':
+        return { light: 400, base: 600, dark: 800 }
+      case 'red':
+        return { light: 600, base: 700, dark: 800 }
+      case 'brown':
+        return { light: 700, base: 800, dark: 900 }
+      default:
+        return { light: 400, base: 500, dark: 600 }
+    }
+  }
+
+  const [selectedTone, selectedColor] = sitePrimaryColor.split('-')
+  const matchedColor = getMatchedColor(selectedColor)
+
+  const getPrimaryColor = () => {
+    const colorTones = getColorTones(selectedColor)
+    const matchedColorTone = getMatchedColorTone(selectedTone, colorTones)
+    return `${matchedColor}-${matchedColorTone}`
   }
 
   const primaryColor = getPrimaryColor()
 
   const lightTheme = {
     primary: primaryColor,
-    secondary: `${sitePrimaryColor}-800`,
+    secondary: `${matchedColor}-900`,
     text: 'text-gray-800',
     subtext: 'text-gray-600',
     altText: 'text-white',
@@ -88,8 +135,8 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
   }
 
   const darkTheme = {
-    primary: primaryColor,
-    secondary: `${sitePrimaryColor}-800`,
+    primary: `${matchedColor}-800`,
+    secondary: `${matchedColor}-900`,
     text: 'text-white',
     subtext: 'text-gray-400',
     altText: 'text-gray-800',
@@ -108,9 +155,9 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
 
   return (
     <div className={`${theme.background} min-h-screen`}>
-      <SEO title={heroTitle} description={`${heroDescription}`} />
+      <SEO title={heroTitle} description={heroDescription} />
       <Hero siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
-      <Listing listingData={listingData} siteData={siteData} theme={theme} />
+      <Listing siteData={siteData} listingData={listingData} theme={theme} />
       <Footer siteData={siteData} theme={theme} />
     </div>
   )
