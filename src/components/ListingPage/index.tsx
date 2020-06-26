@@ -105,10 +105,12 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
         return { light: 400, base: 600, dark: 800 }
       case 'red':
         return { light: 600, base: 700, dark: 800 }
+      case 'orange':
+        return { light: 400, base: 500, dark: 600 }
       case 'brown':
         return { light: 700, base: 800, dark: 900 }
       default:
-        return { light: 400, base: 500, dark: 600 }
+        return { light: 400, base: 600, dark: 800 }
     }
   }
 
