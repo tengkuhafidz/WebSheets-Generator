@@ -55,7 +55,9 @@ const TabView: React.FC<Props> = ({ items, categories, theme, siteData, handleSe
         placeholder="Search"
         onChange={(e) => handleInputSearch(e)}
       />
-      <ListingItems theme={theme} items={itemsInTab} siteData={siteData} />
+      <div className="container mx-auto mt-16 mb-32 px-4">
+        <ListingItems theme={theme} items={itemsInTab} siteData={siteData} />
+      </div>
     </div>
   )
 }

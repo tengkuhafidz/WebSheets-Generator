@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { gtagEventClick } from '../../../utils/gtag'
 import { ItemData, SiteData, Theme } from '../../../utils/models'
 import TabView from './CategoryType/tab-view'
+import SectionView from './CategoryType/section-view'
 
 interface Props {
   theme: Theme
