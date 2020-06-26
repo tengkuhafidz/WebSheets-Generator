@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 import React, { useState } from 'react'
 import { gtagEventClick } from '../../../utils/gtag'
-import { ItemData, SiteData, Theme } from '../../../utils/models'
+import { ItemData, SiteData, Theme, ListingCategoryType } from '../../../utils/models'
 import TabView from './CategoryType/tab-view'
 import SectionView from './CategoryType/section-view'
 
@@ -58,15 +58,38 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
     setSearchTerm(searchTerm)
   }
 
-  return (
-    <TabView
-      items={filteredItems}
-      categories={distinctCategories}
-      theme={theme}
-      siteData={siteData}
-      handleSearch={handleSearch}
-    />
-  )
+  switch (siteData.listingCategoryType) {
+    case ListingCategoryType.TabsView:
+      return (
+        <TabView
+          items={filteredItems}
+          categories={distinctCategories}
+          theme={theme}
+          siteData={siteData}
+          handleSearch={handleSearch}
+        />
+      )
+    case ListingCategoryType.SectionsView:
+      return (
+        <SectionView
+          items={filteredItems}
+          categories={distinctCategories}
+          theme={theme}
+          siteData={siteData}
+          handleSearch={handleSearch}
+        />
+      )
+    default:
+      return (
+        <TabView
+          items={filteredItems}
+          categories={distinctCategories}
+          theme={theme}
+          siteData={siteData}
+          handleSearch={handleSearch}
+        />
+      )
+  }
 }
 
 export default Listing

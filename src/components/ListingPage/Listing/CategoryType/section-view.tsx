@@ -12,14 +12,18 @@ interface Props {
 
 const SectionView: React.FC<Props> = ({ items, categories, theme, siteData, handleSearch }) => {
   const renderSingleSection = (itemsInCategory: ItemData[], category: string) => {
-    return (
-      <div className="container mx-auto mt-16 mb-16 px-4">
-        <h3 className={`mb-8  text-2xl pb-1 px-4 inline-block rounded-lg bg-${theme.primary} text-white`}>
-          {category}
-        </h3>
-        <ListingItems theme={theme} items={itemsInCategory} siteData={siteData} />
-      </div>
-    )
+    if (!!itemsInCategory && itemsInCategory.length > 0) {
+      return (
+        <div className="container mx-auto mt-16 mb-16 px-4">
+          <h3 className={`mb-8  text-2xl pb-1 px-4 inline-block rounded-lg bg-${theme.primary} text-white`}>
+            {category}
+          </h3>
+          <ListingItems theme={theme} items={itemsInCategory} siteData={siteData} />
+        </div>
+      )
+    }
+
+    return <></>
   }
 
   const renderSections = () => {
