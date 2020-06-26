@@ -10,6 +10,7 @@ import Listing from './Listing'
 import SEO from './seo'
 import GridLoader from 'react-spinners/GridLoader'
 import { gtagEventClick } from '../../utils/gtag'
+import BackToTop from './back-to-top'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
@@ -159,6 +160,7 @@ const ListingPage: React.FC<Props> = ({ permalink }) => {
       <Hero siteData={siteData} theme={theme} isDarkMode={isDarkMode} handleDarkModeClick={handleDarkModeClick} />
       <Listing siteData={siteData} listingData={listingData} theme={theme} />
       <Footer siteData={siteData} theme={theme} />
+      <BackToTop />
     </div>
   )
 }
