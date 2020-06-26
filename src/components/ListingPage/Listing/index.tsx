@@ -13,21 +13,21 @@ interface Props {
 const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   const allItems = listingData
 
-  const getDistinctTags = () => {
-    const distinctTags = []
+  const getDistinctCategories = () => {
+    const distinctCategories = []
     allItems.forEach((item) => {
-      if (item.tags) {
-        item.tags.forEach((tag) => {
-          !distinctTags.includes(tag) && distinctTags.push(tag)
+      if (item.categories) {
+        item.categories.forEach((category) => {
+          !distinctCategories.includes(category) && distinctCategories.push(category)
         })
       }
     })
-    return distinctTags
+    return distinctCategories
   }
 
-  const distinctTags = getDistinctTags()
+  const distinctCategories = getDistinctCategories()
   const ALL = 'All'
-  const tabs = [ALL, ...distinctTags]
+  const tabs = [ALL, ...distinctCategories]
   const [currentTab, setCurrentTab] = useState(tabs[0])
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -52,7 +52,7 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   }
 
   const getItemsToDisplay = () => {
-    const itemsInTab = currentTab !== ALL ? allItems.filter((item) => item.tags.includes(currentTab)) : allItems
+    const itemsInTab = currentTab !== ALL ? allItems.filter((item) => item.categories.includes(currentTab)) : allItems
     const searchResult = searchTerm ? getFuseSearchResult(itemsInTab, searchTerm) : itemsInTab
     return searchResult
   }
@@ -73,16 +73,16 @@ const Listing: React.FC<Props> = ({ theme, siteData, listingData }) => {
   }
 
   const renderTabs = () => {
-    if (distinctTags.length > 1) {
-      return tabs.map((tag) => (
-        <li className="mr-3" key={tag}>
+    if (distinctCategories.length > 1) {
+      return tabs.map((category) => (
+        <li className="mr-3" key={category}>
           <a
             className={`inline-block rounded py-1 px-3 cursor-pointer ${
-              tag === currentTab ? `border border-${secondary} ${altBackground} ${text}` : `${text}`
+              category === currentTab ? `border border-${secondary} ${altBackground} ${text}` : `${text}`
             }`}
-            onClick={() => handleTabClick(tag)}
+            onClick={() => handleTabClick(category)}
           >
-            {tag}
+            {category}
           </a>
         </li>
       ))

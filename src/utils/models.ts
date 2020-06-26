@@ -5,7 +5,7 @@ export interface ItemData {
   description: string
   image: string
   actionUrl: string
-  tags: string[]
+  categories: string[]
 }
 
 export interface SiteData {

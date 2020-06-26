@@ -48,11 +48,11 @@ export const transformListingData = (rawListingData) => {
   const activeListingData = rawListingData.filter((listingData) => listingData.hide !== 'TRUE')
 
   return activeListingData.map((rawItem, index) => {
-    const { title, subtitle, description, image, actionUrl, tags } = rawItem
+    const { title, subtitle, description, image, actionUrl, categories } = rawItem
 
-    const getTagsAsArray = () => {
-      if (typeof tags === 'string') {
-        return tags
+    const getCategoriesAsArray = () => {
+      if (typeof categories === 'string') {
+        return categories
           .trim()
           .split(',')
           .map(function (item) {
@@ -69,7 +69,7 @@ export const transformListingData = (rawListingData) => {
       description,
       image,
       actionUrl,
-      tags: getTagsAsArray(),
+      categories: getCategoriesAsArray(),
     }
   })
 }
