@@ -18,7 +18,7 @@ const RequestEmailForm: React.FC<Props> = ({
     <h1 className="font-bold text-xl">Final Step! Please provide your email.</h1>
     <div className="mb-6">
       <label className="block text-gray-700 text-sm  mb-6 max-w-lg mx-auto" htmlFor="email">
-        As SheetySite is an evolving project, we need a way to reach out to you whenever there is any major updates to
+        As WebSheets is an evolving project, we need a way to reach out to you whenever there is any major updates to
         the system.
       </label>
       <input

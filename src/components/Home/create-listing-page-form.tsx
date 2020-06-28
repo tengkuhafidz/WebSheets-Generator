@@ -31,10 +31,10 @@ const CreateListingPageForm: React.FC<Props> = ({
 
   return (
     <div>
-      <h1 className="text-4xl text-center mb-8">SheetySite</h1>
+      <h1 className="text-4xl text-center mb-8">WebSheets</h1>
       <div className="mb-4">
         <p className="block text-gray-700 text-sm font-bold mb-2">
-          1. Make a copy of SheetySite template to you Google Drive by clicking &nbsp;
+          1. Make a copy of WebSheets template to you Google Drive by clicking &nbsp;
           <OutboundLink
             href="https://docs.google.com/spreadsheets/d/16x6gtYQl7TAhehSqcaf_SAMDKNpEgoMxAGgMpQ7NUMs/copy#gid=863715774"
             target="_blank"

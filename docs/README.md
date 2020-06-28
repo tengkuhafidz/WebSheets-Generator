@@ -1,4 +1,4 @@
-# SheetySite
+# WebSheets
 
 This is a Gatsby template for creating listing websites based on Google sheets data.
 
@@ -10,11 +10,11 @@ This is a Gatsby template for creating listing websites based on Google sheets d
 2. Install [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 3. Install [Gatsby](https://www.gatsbyjs.org/docs/glossary/yarn/) `yarn global add gatsby-cli`
 4. Create [Google API key](https://developers.google.com/sheets/api/guides/authorizing#APIKey)
-5. Enable [Google Sheets API](https://console.developers.google.com/apis/library/sheets.googleapis.com?project=sheetysite&folder&organizationId)
+5. Enable [Google Sheets API](https://console.developers.google.com/apis/library/sheets.googleapis.com?project=websheets&folder&organizationId)
 
 ### Preparing the Project
 
-1. Clone this repo `git clone https://github.com/tengkuhafidz/sheetysite.git`
+1. Clone this repo `git clone https://github.com/tengkuhafidz/websheets.git`
 2. Run `yarn install` to download dependencies
 3. Make a copy of the [google sheets template](https://docs.google.com/spreadsheets/d/1S-S1dzVsPlbYtYTq_jiXCcVYKf75wFlGxB2fKkdVc7w/edit#gid=1818216905) and **set it to public**.
 4. The sheet names (`site`, `listing`) and header names (1st row of each sheet) should NOT be changed.
@@ -48,7 +48,7 @@ This is a Gatsby template for creating listing websites based on Google sheets d
 Having an issue? The following are common setup mistakes that might have caused it. Please ensure that the following are set properly.
 
 - Google Sheets MUST be set to **public**
-- [Google API](https://console.developers.google.com/apis/library/sheets.googleapis.com?project=sheetysite&folder&organizationId) MUST be **enabled**
+- [Google API](https://console.developers.google.com/apis/library/sheets.googleapis.com?project=websheets&folder&organizationId) MUST be **enabled**
 - The value of environment variables MUST be in between double quotations
 
 ## Underlying Tech
@@ -69,7 +69,7 @@ The following setup have been configured in this project:
 
 ## TODO
 
-SheetySite
+WebSheets
 
 - [ ] Build custom google sheets plugin that is more flexible
 - [ ] Back to top button
@@ -80,12 +80,12 @@ SheetySite
 - [x] SEO should be be based on the data from the [sheets](https://docs.google.com/spreadsheets/d/1S-S1dzVsPlbYtYTq_jiXCcVYKf75wFlGxB2fKkdVc7w/edit#gid=1818216905)
 - [ ] Cater for private sheets
 
-SheetySite - Consumer Version
+WebSheets - Consumer Version
 
 - [ ] Generate env variables
 - [ ] Auto build and deploy directly via Google Sheets
-- [ ] Build landing page to explain SheetySite
-- [ ] Create consumer-friendly explainer material on how to use SheetySite
+- [ ] Build landing page to explain WebSheets
+- [ ] Create consumer-friendly explainer material on how to use WebSheets
 
 ## What's inside? 🧐
 
