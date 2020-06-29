@@ -6,6 +6,17 @@ export const fetchData = async (url: string) => {
   return await data.json()
 }
 
+export const postData = async (url: string, data: any) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  return response.json()
+}
+
 export const getHeightBasedOnCardSize = (listingCardSize: ListingCardSize): number => {
   switch (listingCardSize) {
     case ListingCardSize.SMALL:

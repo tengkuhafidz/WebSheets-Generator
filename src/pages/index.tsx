@@ -5,6 +5,7 @@ import SuccessCard from '../components/Home/success-card'
 import { checkPermalinkAvailability, createPermalinkSheetIdMapping } from '../services/firebase'
 import { getSheetsData } from '../services/sheets'
 import { gtagEventClick } from '../utils/gtag'
+import { captureInfluenceSiteGeneration } from '../services/useinfluence'
 
 const Home = () => {
   const [sheetsUrl, setSheetsUrl] = useState(null)
@@ -118,13 +119,18 @@ const Home = () => {
     return re.test(email)
   }
 
+  const executeUponSuccessfulSiteGeneration = () => {
+    setHasGeneratedSite(true)
+    captureInfluenceSiteGeneration(email, permalink)
+  }
+
   const handleSiteGeneration = async () => {
     setIsLoading(true)
     const isValidEmail = validateEmail()
     if (isValidEmail) {
       const isSuccessful = await createPermalinkSheetIdMapping(permalink, sheetId, email)
       isSuccessful
-        ? setHasGeneratedSite(true)
+        ? executeUponSuccessfulSiteGeneration()
         : setInvalidEmailErrMsg('There was an unexpected error. Please try again')
     } else {
       setInvalidEmailErrMsg('Please input a valid email')
