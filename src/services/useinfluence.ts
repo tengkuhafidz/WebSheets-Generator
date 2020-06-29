@@ -6,8 +6,9 @@ const WEBHOOKS_URL =
 export const captureInfluenceSiteGeneration = async (email, permalink) => {
   const options = {
     email,
-    productName: 'generatedSite',
     firstname: permalink,
+    city: '',
+    country: '',
   }
 
   return await postData(WEBHOOKS_URL, options)
