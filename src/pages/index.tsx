@@ -172,7 +172,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-green-600 text-gray-800 py-4 md:py-24">
+    <div className="min-h-screen bg-brand text-gray-800 py-4 md:py-24">
       <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">{renderContent()}</div>
       <p className="text-center text-gray-200 text-xs">&copy;2020 WebSheets. All rights reserved.</p>
     </div>
