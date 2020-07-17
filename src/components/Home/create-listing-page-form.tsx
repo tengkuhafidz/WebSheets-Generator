@@ -31,9 +31,9 @@ const CreateListingPageForm: React.FC<Props> = ({
 
   return (
     <div>
-      <h1 className="text-4xl text-center mb-8">WebSheets</h1>
+      <h1 className="text-5xl font-bold text-center mb-8">WebSheets Generator</h1>
       <div className="mb-4">
-        <p className="block text-gray-700 text-sm font-bold mb-2">
+        <p className="block text-xl text-gray-700 mb-2">
           1. Make a copy of WebSheets template to you Google Drive by clicking &nbsp;
           <OutboundLink
             href="https://docs.google.com/spreadsheets/d/16x6gtYQl7TAhehSqcaf_SAMDKNpEgoMxAGgMpQ7NUMs/copy#gid=863715774"
@@ -47,12 +47,12 @@ const CreateListingPageForm: React.FC<Props> = ({
         </p>
       </div>
       <div className="mb-4">
-        <p className="block text-gray-700 text-sm font-bold mb-2">
+        <p className="block text-xl text-gray-700 mb-2">
           2. Click the `Share` button and change the view access setting to `anyone with the link`
         </p>
       </div>
       <div className="mb-6">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="sheetsUrl">
+        <label className="block text-xl text-gray-700 mb-2" htmlFor="sheetsUrl">
           3. Copy the link and paste it here
         </label>
         <input
@@ -62,12 +62,12 @@ const CreateListingPageForm: React.FC<Props> = ({
           placeholder="Sheets Url"
           onChange={(e) => handleSheetsUrlChange(e)}
         />
-        <p className="text-red-500 text-xs">{invalidSheetsErrMsg}</p>
+        <p className="text-red-500 mt-1">{invalidSheetsErrMsg}</p>
       </div>
       <div className="mb-6">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="permalink">
+        <label className="block text-xl text-gray-700 mb-2" htmlFor="permalink">
           4. Type in the permalink you want for your site
-          <p className="font-medium">
+          <p className="text-lg ml-6">
             i.e. <span className="text-blue-600">{sheetySiteUrl}</span>
           </p>
         </label>
@@ -79,14 +79,14 @@ const CreateListingPageForm: React.FC<Props> = ({
           onChange={(e) => handlePermalinkChange(e)}
           onKeyDown={(e) => preventSpaceInput(e)}
         />
-        <p className="text-red-500 text-xs">
+        <p className="text-red-500 mt-1">
           {invalidPermalinkErrMsg}
           {unavailablePermalinkErrMsg}
         </p>
       </div>
       <div className="flex items-center justify-between">
         <button
-          className={`text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+          className={`text-white text-xl font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline ${
             isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
           }`}
           type="button"
