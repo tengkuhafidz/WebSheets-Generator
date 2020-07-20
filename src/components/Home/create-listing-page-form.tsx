@@ -9,7 +9,7 @@ interface Props {
   invalidSheetsErrMsg: string
   invalidPermalinkErrMsg: string
   unavailablePermalinkErrMsg: string
-  sheetySiteUrl: string
+  websheetsUrl: string
   isLoading: boolean
 }
 
@@ -20,7 +20,7 @@ const CreateListingPageForm: React.FC<Props> = ({
   invalidSheetsErrMsg,
   invalidPermalinkErrMsg,
   unavailablePermalinkErrMsg,
-  sheetySiteUrl,
+  websheetsUrl,
   isLoading,
 }) => {
   const preventSpaceInput = (e) => {
@@ -56,7 +56,7 @@ const CreateListingPageForm: React.FC<Props> = ({
           3. Copy the link and paste it here
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="sheetsUrl"
           type="text"
           placeholder="Sheets Url"
@@ -68,11 +68,11 @@ const CreateListingPageForm: React.FC<Props> = ({
         <label className="block text-xl text-gray-700 mb-2" htmlFor="permalink">
           4. Type in the permalink you want for your site
           <p className="text-lg ml-6">
-            i.e. <span className="text-blue-600">{sheetySiteUrl}</span>
+            i.e. <span className="text-blue-600">{websheetsUrl}</span>
           </p>
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="permalink"
           type="text"
           placeholder="Permalink"
@@ -86,7 +86,7 @@ const CreateListingPageForm: React.FC<Props> = ({
       </div>
       <div className="flex items-center justify-between">
         <button
-          className={`text-white text-xl font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline ${
+          className={`text-white text-xl font-bold mt-2 py-2 px-6 rounded focus:outline-none focus:shadow-outline ${
             isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
           }`}
           type="button"

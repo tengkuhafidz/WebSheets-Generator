@@ -71,7 +71,7 @@ const Home = () => {
     }
   }
 
-  const sheetySiteUrl = `https://sheety.site/p/${permalink}`
+  const websheetsUrl = `https://my.websheets.co/p/${permalink}`
 
   const extractSheetIdFromUrl = (sheetsUrl: string): string => {
     if (!!sheetsUrl) {
@@ -145,7 +145,7 @@ const Home = () => {
 
   const renderContent = () => {
     if (hasGeneratedSite) {
-      return <SuccessCard sheetySiteUrl={sheetySiteUrl} />
+      return <SuccessCard websheetsUrl={websheetsUrl} sheetsUrl={sheetsUrl}/>
     } else if (hasPassedValidation) {
       return (
         <RequestEmailForm
@@ -164,7 +164,7 @@ const Home = () => {
           invalidSheetsErrMsg={invalidSheetsErrMsg}
           invalidPermalinkErrMsg={invalidPermalinkErrMsg}
           unavailablePermalinkErrMsg={unavailablePermalinkErrMsg}
-          sheetySiteUrl={sheetySiteUrl}
+          websheetsUrl={websheetsUrl}
           isLoading={isLoading}
         />
       )
