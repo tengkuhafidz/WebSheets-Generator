@@ -36,7 +36,7 @@ const CreateListingPageForm: React.FC<Props> = ({
         <p className="block text-xl text-gray-700 mb-2">
           1. Make a copy of WebSheets template to you Google Drive by clicking &nbsp;
           <OutboundLink
-            href="https://docs.google.com/spreadsheets/d/16x6gtYQl7TAhehSqcaf_SAMDKNpEgoMxAGgMpQ7NUMs/copy#gid=863715774"
+            href="https://docs.google.com/spreadsheets/d/17c2Fy1D5k2P7BkjmJoFIY_eohHBMM806_lHCYKzRtqM/edit#gid=72026853"
             target="_blank"
             rel="noreferrer"
             className="text-blue-600"
