@@ -16,7 +16,7 @@ This is a Gatsby template for creating listing websites based on Google sheets d
 
 1. Clone this repo `git clone https://github.com/tengkuhafidz/websheets.git`
 2. Run `yarn install` to download dependencies
-3. Make a copy of the [google sheets template](https://docs.google.com/spreadsheets/d/17c2Fy1D5k2P7BkjmJoFIY_eohHBMM806_lHCYKzRtqM/edit#gid=72026853) and **set it to public**.
+3. Make a copy of the [google sheets template](https://docs.google.com/spreadsheets/d/17c2Fy1D5k2P7BkjmJoFIY_eohHBMM806_lHCYKzRtqM/copy#gid=72026853) and **set it to public**.
 4. The sheet names (`site`, `listing`) and header names (1st row of each sheet) should NOT be changed.
 5. Fill in the google sheets with the site's data and item listings details
    - Ensure to not leave any fields empty. Write `nil` to indicate no value instead
