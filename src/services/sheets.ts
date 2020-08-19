@@ -117,3 +117,7 @@ export const getSheetsData = async (sheetId): Promise<SheetsData> => {
   }
   return null
 }
+
+export const generateSheetsUrlWithId = (sheetsId) => {
+  return `https://docs.google.com/spreadsheets/d/${sheetsId}`
+}

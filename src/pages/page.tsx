@@ -4,7 +4,7 @@ import ListingPage from '../components/ListingPage'
 
 const Page = () => {
   return (
-    <Router basepath="/p">
+    <Router basepath="/page">
       <ListingPage path="/:permalink" />
     </Router>
   )

@@ -9,7 +9,7 @@ interface Props {
   invalidSheetsErrMsg: string
   invalidPermalinkErrMsg: string
   unavailablePermalinkErrMsg: string
-  websheetsUrl: string
+  websheetsSiteUrl: string
   isLoading: boolean
 }
 
@@ -20,7 +20,7 @@ const CreateListingPageForm: React.FC<Props> = ({
   invalidSheetsErrMsg,
   invalidPermalinkErrMsg,
   unavailablePermalinkErrMsg,
-  websheetsUrl,
+  websheetsSiteUrl,
   isLoading,
 }) => {
   const preventSpaceInput = (e) => {
@@ -68,7 +68,7 @@ const CreateListingPageForm: React.FC<Props> = ({
         <label className="block text-xl text-gray-700 mb-2" htmlFor="permalink">
           4. Type in the permalink you want for your site
           <p className="text-lg ml-6">
-            i.e. <span className="text-blue-600">{websheetsUrl}</span>
+            i.e. <span className="text-blue-600">{websheetsSiteUrl}</span>
           </p>
         </label>
         <input
