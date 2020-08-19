@@ -15,7 +15,7 @@ const SheetsRedirect: React.FC<Props> = ({ permalink }) => {
     const executeAsyncOperations = async () => {
       const sheetId = await findSheetIdByPermalink(permalink.toLowerCase())
 
-      if (!sheetId || !window) {
+      if (!sheetId || window !== undefined) {
         navigate('/')
         return
       }
