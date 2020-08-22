@@ -3,6 +3,7 @@ import { navigate } from 'gatsby'
 import { findSheetIdByPermalink } from '../../services/firebase'
 import { RouteComponentProps } from '@reach/router'
 import { generateSheetsUrlWithId } from '../../services/sheets'
+import GridLoader from 'react-spinners/GridLoader'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props
@@ -26,7 +27,13 @@ const SheetsRedirect: React.FC<Props> = ({ permalink }) => {
     executeAsyncOperations()
   }, [permalink])
 
-  return <h1>Loading...</h1>
+  return (
+    <div className="flex h-screen">
+      <div className="mx-auto mt-64">
+        <GridLoader color={'#049663'} />
+      </div>
+    </div>
+  )
 }
 
 export default SheetsRedirect
